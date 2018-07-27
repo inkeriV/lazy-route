@@ -4,7 +4,7 @@ Lazy-route on ohjelma, joka etsii painotetussa verkossa (ei negatiivisia arvoja)
 Työn aikana vertaan Dijkstran algoritmia sekä A*-algoritmia. Valitsin Dijkstran algoritmin Bellman-Fordin algoritmin sijaan, koska Dijkstran aikavaativuus on O(|E|+|V|log|V|), kun taas Bellman-Fordin aikavaativuus on O(|E||V|). A*-algoritmi on puolestaan yleisesti suositumpi ja yleensä nopeampi kuin Dijkstra.
 
 ### Dijkstran algoritmi
-* tietorakenteet minimikekoa ja vieruslistaa
+* tietorakenteet minimikeko ja vieruslista
 * tavoite aikavaativuus O(|E|+|V|log|V|)
 * tavoite tilavaativuus O(|V|)
 
