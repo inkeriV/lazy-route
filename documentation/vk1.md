@@ -1,5 +1,4 @@
 ## Viikkoraportti 1 
-Tämän vuoksi testauksetkin vähän jännittää, kun ei niistäkään ole aikaisempaa kokemusta kuin pikkaisen ohjelmoinnin jatkokurssilta.
 
 ### Mitä tein tällä viikolla?
 Tällä viikolla valitsin itselleni aiheen ja loin ohjelmalleni repositorion GitHubiin (ja issuet on päällä). Kertasin Tiran kurssia ja palautin mieleeni miten valitsemani algoritmit toimii ja mitä tietorakenteita niihin kuului. 
