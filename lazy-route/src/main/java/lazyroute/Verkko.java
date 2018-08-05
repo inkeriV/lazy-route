@@ -5,6 +5,8 @@
  */
 package lazyroute;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author inkeriv
@@ -13,65 +15,35 @@ package lazyroute;
 /*Käsiteltävän verkon luonti. Ei lopullinen verkkojen presentaatio.*/
 public class Verkko {
     
-    public static void main(String[] args){   
-        int[][] verkko = alusta();
-        int alku = 0; int loppu = 99;
-        dijkstra(verkko, alku, loppu);
-    }
-    
-    
-    public static void dijkstra(int[][] verkko, int alku, int loppu){
-        int[][] vlista = vieruslista(verkko);     
-    }
-    
-    
-    /*Tässä testiversiossa yhteyden ja painot randomilla*/
-    public static int[][] alusta(){
-        int[][] verkko = new int[100][100];
-        
-        for (int i = 0; i < 100; i++){
-            for (int j = 0; j < i; j++){
-                if (Math.random() < 0.2){
-                    verkko[i][j] = (int)Math.floor(Math.random()*100);
-                    verkko[j][i] = verkko[i][j];
-                }else{
-                    verkko[i][j] = 0; verkko[j][i] = 0;
-                }
+            public static void teeLista() {
+            Dijkstra[] lista = new Dijkstra[9];
+            lista[0]=new Dijkstra(0,3,100); lista[1]=new Dijkstra(1,4,100);
+            lista[2]=new Dijkstra(2,5,100); lista[3]=new Dijkstra(3,4,100);
+            lista[4]=new Dijkstra(4, 6, 100); lista[5]=new Dijkstra(5, 4, 100);
+            lista[6]=new Dijkstra(6, 3, 100); lista[7]=new Dijkstra(7, 3, 100);
+            lista[8]=new Dijkstra(8, 3, 100); 
+            
+            //vieruslista
+            ArrayList[] vl = new ArrayList[10];
+            for (int i=1; i<=lista.length; i++) {
+                vl[i]= new ArrayList<Dijkstra>(); 
             }
-        }
-        tulostaVerkko(verkko);
-        return verkko;
-    }
-    
-    //vieruslista atm matriisina
-    public static int[][] vieruslista(int[][] verkko){
-        int[][] vlista = new int[100][50];
-        
-        for (int i = 0; i < 100; i++){
-            for (int j = 0; j< 100; j++){
-                vlista[i][j] = 0;
-            }
-        }
-        
-        for (int i = 0; i < 100; i++){
-            int apu = 0;
-            for (int j = 0; j< 100; j++){
-                if (verkko[i][j]!=0){
-                    vlista[i][apu]=j;
-                    apu++;
-                }
-            }
-        }
-        return vlista;
-    }
-    
-    //verkon tulostus, tulostaa solmu1 -> solmu2, ja niiden välisen painon
-    public static void tulostaVerkko(int[][] graph){
+            vl[1].add(lista[1]); vl[1].add(lista[3]); 
+            vl[2].add(lista[0]); vl[2].add(lista[4]); vl[2].add(lista[2]);
+            vl[3].add(lista[1]); vl[3].add(lista[5]); 
+            vl[4].add(lista[0]); vl[4].add(lista[4]); vl[4].add(lista[6]);
+            vl[5].add(lista[1]); vl[5].add(lista[3]); vl[5].add(lista[5]); vl[5].add(lista[7]);
+            vl[6].add(lista[2]); vl[6].add(lista[4]); vl[6].add(lista[8]);
+            vl[7].add(lista[3]); vl[7].add(lista[7]);
+            vl[8].add(lista[6]); vl[8].add(lista[4]); vl[8].add(lista[8]);
+            vl[9].add(lista[5]); vl[9].add(lista[7]);
 
-        for (int i = 0; i < 100; i++){
-            for (int j = 0; j < 100; j++){
-                System.out.println(i + " -> " + j + ": " + graph[i][j]);
-            }
+            int a=0;
+            int l=8;
+            Dijkstra.dijkstra(lista, vl, a, l);    
         }
-    }
+              
+        public static void main(String[] args) {
+            teeLista();
+        } 
 }
