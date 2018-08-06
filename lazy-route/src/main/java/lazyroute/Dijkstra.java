@@ -18,9 +18,9 @@ public class Dijkstra implements Comparable<Dijkstra> {
     
     /* Dijkstra*/
 
-    private int id;
-    private int paino;
-    private int dist;
+    public int id;
+    public int paino;
+    public int dist;
     
     //konstruktori oliolle    
     public Dijkstra(int nid, int npaino, int ndist) {
