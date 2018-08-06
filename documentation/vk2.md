@@ -12,7 +12,7 @@ Jälleen kerran hyvin suunniteltu on puoliksi tehty :')
 ### Mikä jäi epäselväksi tai tuottanut vaikeuksia?
 Maven on minulle ihan uusi juttu ja olin tänään vähän hukassa kun yritin selvittää ratkaisua siihen että se herjaa tällaista:
 Failed to execute goal org.codehaus.mojo:exec-maven.plugin:1.6.0:java (default-cli) on project lazy-route: 
-The parameters 'mainClass' for goal org.codehaus.mojo:exec-maven-plugin:1.6.0:java are missing or invalid
+The parameters 'mainClass' for goal org.codehaus.mojo:exec-maven-plugin:1.6.0:java are missing or invalid (edit: 6.8. ongelma ratkesi).
 
 Katsoin stackoverflowsta muutamia vastauksia kyseiseen ongelmaan, mutta en vielä ihan hiffannut miten saan tuon korjattua.. Ilmeisesti tarvitsen mainClass parametrit, koska sellaisia minulla ei ainakaan ole. 
 Hämmentää hieman sekin, että välillä suoritus toimi ongelmitta, välillä niitä taas tuli, mutta en katsonut vasta kun tänään tarkemmin, että mikä se ongelma oli.
