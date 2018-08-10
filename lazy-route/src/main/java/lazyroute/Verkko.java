@@ -76,6 +76,7 @@ public class Verkko {
     }
               
     public static void main(String[] args) {
-        teeLista();
+        //teeLista();
+        AStar.alustus(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 1, 4, 4);
     } 
 }
