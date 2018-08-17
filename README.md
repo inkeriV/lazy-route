@@ -2,7 +2,7 @@
 Ohjelma etsii lyhimmän reitin mxn verkossa kahden solmun välillä dijkstran- tai a*-algoritmilla.
 
 * [Viesti koodikatselmoijalle](https://github.com/inkeriV/lazy-route/blob/master/documentation/viestiKoodikatselmoijalle.md)
-)
+
 
 ### dokumentaatio
 * [työn määrittely](https://github.com/inkeriV/lazy-route/blob/master/documentation/definition.md)

@@ -13,7 +13,7 @@ Tässä yksi isompi verkko ohjelman testaamiseen, ettei itse tarvitse ruveta nä
 
 ```
 mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko
-´´´
+```
 
 
 10x10 verkko, näyttää tältä
@@ -38,5 +38,5 @@ mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko
 3 - 4 - 4 - 4 - 4 - 4 - 2 - 2 - 1 - 1
 |   |   |   |   |   |   |   |   |   |
 7 - 7 - 7 - 7 - 3 - 3 - 2 - 1 - 5 - 3
-´´´
+```
 
