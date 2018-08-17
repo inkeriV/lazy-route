@@ -17,6 +17,7 @@ mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko
 
 
 10x10 verkko, näyttää tältä
+
 ```
 1 - 2 - 2 - 2 - 2 - 2 - 9 - 9 - 9 - 7
 |   |	|   |	|   |   |   |   |   |
