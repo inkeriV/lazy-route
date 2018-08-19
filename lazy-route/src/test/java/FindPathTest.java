@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author vbinkeri
+ * @author inkeriv
  */
 public class FindPathTest {
     

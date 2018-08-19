@@ -25,7 +25,7 @@ public class Verkko {
     private int lj;
     
     //"ääretön"-arvo
-    static int infi=1000000000;
+    private static final int INFINITE_VALUE=1000000000;
     
     public int[] solmut;
     public int a;
@@ -80,39 +80,39 @@ public class Verkko {
         
         if (alg=="a" || alg=="A") {
             int x = 1;
-            lista[x]=new Node(x,infi,h(1,0,li,lj));
+            lista[x]=new Node(x,INFINITE_VALUE,h(1,0,li,lj));
             for (int j=0; j<n; j++) {
                 for (int i=0; i<m; i++) {
 
                     //Solmu-oliot listaan (täällä lista[1] jää null)
                     if (lista[x-1]==null) {
-                        lista[x-1]=new Node(x-1, infi,h(i,j,li,lj));
+                        lista[x-1]=new Node(x-1, INFINITE_VALUE,h(i,j,li,lj));
                     }
 
                     if (i==1 && j==0){
                         //vasen yläkulma
-                        vl[x].add(new Node(1,infi,h(1,0,li,lj))); //seuraava solmu
-                        vl[x].add(new Node(m,infi,h(0,1,li,lj))); //alempi solmu
+                        vl[x].add(new Node(1,INFINITE_VALUE,h(1,0,li,lj))); //seuraava solmu
+                        vl[x].add(new Node(m,INFINITE_VALUE,h(0,1,li,lj))); //alempi solmu
                         x++;
 
                     }
                     if (i==m-1 && j==0){
                         //oikea yläkulma
-                        vl[x].add(new Node(m-2,infi,h(m-2,0,li,lj))); //edellinen solmu
-                        vl[x].add(new Node((m*2)-1,infi,h(m-1, 1,li,lj))); //alempi solmu
+                        vl[x].add(new Node(m-2,INFINITE_VALUE,h(m-2,0,li,lj))); //edellinen solmu
+                        vl[x].add(new Node((m*2)-1,INFINITE_VALUE,h(m-1, 1,li,lj))); //alempi solmu
                         x++;
 
                     }
                     if (x==m*(n-1)+1 && j==n-1) {
                         //vasen alakulma
-                        vl[x].add(new Node(m*(n-2),infi,h(0, n-1, li, lj))); //ylempi solmu
-                        vl[x].add(new Node(m*(n-1)+1,infi,h(1,j,li,lj))); //seuraava solmu
+                        vl[x].add(new Node(m*(n-2),INFINITE_VALUE,h(0, n-1, li, lj))); //ylempi solmu
+                        vl[x].add(new Node(m*(n-1)+1,INFINITE_VALUE,h(1,j,li,lj))); //seuraava solmu
                         x++;
                     }
                     if (x==m*n && j==n) {
                         //oikea alakulma
-                        vl[x].add(new Node(m*(n-1)-1,infi,h(0,n-2,li,lj))); //ylempi solmu
-                        vl[x].add(new Node(m*n-2,infi,h(m-2, n-1, li, lj))); //edeltävä solmu
+                        vl[x].add(new Node(m*(n-1)-1,INFINITE_VALUE,h(0,n-2,li,lj))); //ylempi solmu
+                        vl[x].add(new Node(m*n-2,INFINITE_VALUE,h(m-2, n-1, li, lj))); //edeltävä solmu
                         x++;
                     }
 
@@ -120,42 +120,42 @@ public class Verkko {
                     //Verkon reunoilla olevat solmut (ei kulmasolmut)
                     if (j==0 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
                         //yläreuna
-                        vl[x].add(new Node(x-2,infi,h(i-1,j,li,lj))); //edeltävä 
-                        vl[x].add(new Node(i+m, infi,h(i,j+1,li,lj))); //alla oleva
-                        vl[x].add(new Node(x,infi,h(x,j,li,lj))); //seuraava
+                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edeltävä 
+                        vl[x].add(new Node(i+m, INFINITE_VALUE,h(i,j+1,li,lj))); //alla oleva
+                        vl[x].add(new Node(x,INFINITE_VALUE,h(x,j,li,lj))); //seuraava
                         x++;
 
                     }
                     if (i==0 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
                         //vasen reuna
-                        vl[x].add(new Node(x-m-1,infi,h(i,j-1,li,lj))); //ylempi 
-                        vl[x].add(new Node(x,infi,h(i+1,j,li,lj))); //seuraava
-                        vl[x].add(new Node(x+m-1,infi,h(i,j+1,li,lj))); //alempi
+                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi 
+                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj))); //seuraava
+                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //alempi
                         x++;
 
                     }
                     if (i==m-1 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
                         //oikea reuna
-                        vl[x].add(new Node(x-m-1,infi,h(i,j-1,li,lj))); //ylempi
-                        vl[x].add(new Node(x-2,infi,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x+m-1,infi,h(i,j+1,li,lj))); //alempi
+                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi
+                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
+                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //alempi
                         x++;
 
                     }
                     if (j==n-1 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
                         //alareuna
-                        vl[x].add(new Node(x-2,infi,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x-m-1,infi,h(i,j-1,li,lj))); //ylempi
-                        vl[x].add(new Node(x,infi,h(i+1,j,li,lj)));//seuraava
+                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
+                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi
+                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj)));//seuraava
                         x++;
 
 
                     // Muut solmut, joilla 4 vierussolmua
                     } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1){
-                        vl[x].add(new Node(x-m-1,infi,h(i,j-1,li,lj))); //ylä
-                        vl[x].add(new Node(x+m-1,infi,h(i,j+1,li,lj))); //ala
-                        vl[x].add(new Node(x-2,infi,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x,infi,h(i+1,j,li,lj))); //oikea
+                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylä
+                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //ala
+                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
+                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj))); //oikea
                         x++;
 
                     }
@@ -165,39 +165,39 @@ public class Verkko {
         //Vieruslista Dijkstralle
         if (alg == "d" || alg == "D") {
             int x = 1;
-            lista[x]=new Node(x,solmut[x],infi);
+            lista[x]=new Node(x,solmut[x],INFINITE_VALUE);
             for (int j=0; j<n; j++) {
                 for (int i=0; i<m; i++) {
 
                     //Solmu-oliot listaan (täällä lista[1] jää null)
                     if (lista[x-1]==null) {
-                        lista[x-1]=new Node(x-1, solmut[x-1],infi);
+                        lista[x-1]=new Node(x-1, solmut[x-1],INFINITE_VALUE);
                     }
 
                     if (i==1 && j==0){
                         //vasen yläkulma
-                        vl[x].add(new Node(1,solmut[1],infi)); //seuraava solmu
-                        vl[x].add(new Node(m,solmut[m],infi)); //alempi solmu
+                        vl[x].add(new Node(1,solmut[1],INFINITE_VALUE)); //seuraava solmu
+                        vl[x].add(new Node(m,solmut[m],INFINITE_VALUE)); //alempi solmu
                         x++;
 
                     }
                     if (i==m-1 && j==0){
                         //oikea yläkulma
-                        vl[x].add(new Node(m-2,solmut[m-2],infi)); //edellinen solmu 
-                        vl[x].add(new Node((m*2)-1,solmut[m*2-1], infi)); //alempi solmu
+                        vl[x].add(new Node(m-2,solmut[m-2],INFINITE_VALUE)); //edellinen solmu 
+                        vl[x].add(new Node((m*2)-1,solmut[m*2-1], INFINITE_VALUE)); //alempi solmu
                         x++;
 
                     }
                     if (x==m*(n-1)+1 && j==n-1) {
                         //vasen alakulma
-                        vl[x].add(new Node(m*(n-2),solmut[m*(n-2)], infi)); //ylempi solmu
-                        vl[x].add(new Node(m*(n-1)+1,solmut[m*(n-1)], infi)); //seuraava solmu
+                        vl[x].add(new Node(m*(n-2),solmut[m*(n-2)], INFINITE_VALUE)); //ylempi solmu
+                        vl[x].add(new Node(m*(n-1)+1,solmut[m*(n-1)], INFINITE_VALUE)); //seuraava solmu
                         x++;
                     }
                     if (x==m*n && j==n) {
                         //oikea alakulma
-                        vl[x].add(new Node(m*(n-1)-1,solmut[m*(n-1)], infi)); //ylempi solmu
-                        vl[x].add(new Node(m*n-2,solmut[m*n-2], infi)); //edeltävä solmu
+                        vl[x].add(new Node(m*(n-1)-1,solmut[m*(n-1)], INFINITE_VALUE)); //ylempi solmu
+                        vl[x].add(new Node(m*n-2,solmut[m*n-2], INFINITE_VALUE)); //edeltävä solmu
                         x++;
                     }
 
@@ -205,42 +205,42 @@ public class Verkko {
                     //Verkon reunoilla olevat solmut (ei kulmasolmut)
                     if (j==0 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
                         //yläreuna
-                        vl[x].add(new Node(x-2,solmut[x-2], infi)); //edeltävä 
-                        vl[x].add(new Node(i+m, solmut[i+m], infi)); //alla oleva
-                        vl[x].add(new Node(x,solmut[x], infi)); //seuraava
+                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edeltävä 
+                        vl[x].add(new Node(i+m, solmut[i+m], INFINITE_VALUE)); //alla oleva
+                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //seuraava
                         x++;
 
                     }
                     if (i==0 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
                         //vasen reuna
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], infi)); //ylempi 
-                        vl[x].add(new Node(x,solmut[x], infi)); //seuraava
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], infi)); //alempi
+                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi 
+                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //seuraava
+                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //alempi
                         x++;
 
                     }
                     if (i==m-1 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
                         //oikea reuna
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], infi)); //ylempi
-                        vl[x].add(new Node(x-2,solmut[x-2], infi)); //edellinen
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], infi)); //alempi
+                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi
+                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
+                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //alempi
                         x++;
 
                     }
                     if (j==n-1 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
                         //alareuna
-                        vl[x].add(new Node(x-2,solmut[x-2], infi)); //edellinen
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], infi)); //ylempi
-                        vl[x].add(new Node(x,solmut[x], infi));//seuraava
+                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
+                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi
+                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE));//seuraava
                         x++;
 
 
                     // Muut solmut, joilla 4 vierussolmua
                     } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1){
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], infi)); //ylä
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], infi)); //ala
-                        vl[x].add(new Node(x-2,solmut[x-2], infi)); //edellinen
-                        vl[x].add(new Node(x,solmut[x], infi)); //oikea
+                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylä
+                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //ala
+                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
+                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //oikea
                         x++;
 
                     }
@@ -261,7 +261,9 @@ public class Verkko {
     public static void main(String[] args) {
         
         //ohjelman suoritus netbeanssissä
-        //alustus(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,3,5,3}, 1, 12, 4, 4, "a");
+
+        //Verkko test = new Verkko(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,3,5,3}, 1, 12, 4, 4, "d");
+        //test.alustus();
         
         //Verkko koe=new Verkko(new int[]{1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1},1,35,6,6,"a");
         //koe.alustus();

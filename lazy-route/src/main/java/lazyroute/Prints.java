@@ -6,14 +6,18 @@
 package lazyroute;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import static lazyroute.Pino.createPino;
 
 /**
  *
  * @author inkeriv
  */
 
+/*
+
+Luokka tulostusmetodeja varten.
+
+*/
 public class Prints {
     
     public static void printVieruslista(ArrayList<Node>[] vl) {
@@ -45,19 +49,19 @@ public class Prints {
 
         int u = reitti[loppu-1]; //u on sen solmun indeksi, josta viimeiseen solmuun kuljettiin
 
-        Stack<Integer> print = new Stack();
+        Pino pino = createPino();
         
         //siirrytään reitti-taulukossa taaksepäin niin kauan, kunnes tullaan alkusolmuun
         while (u != alku-1) { 
-            print.add(u);
+            pino.addPinoon(u);
             u = reitti[u]; 
         }
         
         System.out.print(alku+" -> ");
         
-        while (!print.isEmpty()) {
+        while (!pino.isEmpty()) { 
 
-            u = print.pop();
+            u=pino.popPino();
             System.out.print(u+1 + " -> ");
         }
         System.out.println(loppu);
@@ -65,7 +69,7 @@ public class Prints {
     
     /* Reitti taulukon tulostus, tämä metodi lähinnä koodin toimivuuden tarkastelua varten.
     Tulostaa solmun indeksin ja sen solmun, josta kyseiseen solmuun oli lyhin matka. */
-    public static void tulostaReittiTaulukko(int[] reitti ) {
+    public void tulostaReittiTaulukko(int[] reitti ) {
         int luku=0;
         for (int i:reitti) {
             System.out.println(luku+": "+i);

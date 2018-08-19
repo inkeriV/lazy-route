@@ -14,9 +14,15 @@ import static lazyroute.Prints.tulostaReitti;
  *
  * @author inkeriv
  */
+
+/*
+
+Laskenta tapahtuu täällä.
+
+*/
 public class FindPath {
     
-    
+    /* Alustava metodi dijkstraan ja a-stariin. */
     public static void shortestPath(Node[] lista, ArrayList<Node>[] vl, int alku, int loppu, String alg, int[] solmut) {
         
         PriorityQueue<Node> keko = new PriorityQueue<Node>();
@@ -46,7 +52,6 @@ public class FindPath {
         }    
     }
     
-    //dijkstrassa jtn väärin
     private static void dijkstra(Node[] lista, ArrayList<Node>[] vl, int alku, int loppu, int[] solmut, boolean[] checked, int[] reitti, PriorityQueue<Node> keko) {
        
         while (checked[loppu-1]==false) { 
