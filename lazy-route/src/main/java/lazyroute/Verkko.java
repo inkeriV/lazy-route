@@ -5,8 +5,7 @@
  */
 package lazyroute;
 
-import java.util.ArrayList;
-import static lazyroute.Prints.printVieruslista;
+import lazyroute.Node;
 
 /**
  *
@@ -16,18 +15,18 @@ import static lazyroute.Prints.printVieruslista;
 
 public class Verkko {
     
-    //alkusolmun koordinaatit
+    //start node coordinates in graph
     private int ai;
     private int aj;
 
-    //loppusolmun koordinaatit
+    //end node coordinates in graph
     private int li;
     private int lj;
     
-    //"ääretön"-arvo
-    private static final int INFINITE_VALUE=1000000000;
+    //infinite value
+    private static final int INFINITE_VALUE=1000000000;//Integer.MAX_VALUE;
     
-    public int[] solmut;
+    public int[] nodes;
     public int a;
     public int l;
     public int m;
@@ -35,7 +34,7 @@ public class Verkko {
     public String alg;
     
     public Verkko (int[] s, int alku, int loppu, int lev, int pit, String al) {
-        solmut = s;
+        nodes = s;
         a = alku;
         l = loppu;
         m = lev;
@@ -43,233 +42,230 @@ public class Verkko {
         alg = al;
     }
      
-    //verkkojen luonti
-    //public void alustus(int[] solmut, int a, int l, int m, int n, String alg) {
-    public void alustus() {
-        Node[] lista = new Node[solmut.length] ;
-        int[][] verkko = new int[m][n];
+  
+    //creating graph presentations
+    //private Node[] list;
+    public void init() {
+        Node[] list = new Node[nodes.length] ;
+        //list = new Node[nodes.length];
+        int[][] graph = new int[m][n];
         
         
-        //lista solmuista, painot
-        int luku=0;
+        //Node-type list of nodes
+        int value=0;
         for (int j=0; j<m; j++) {
             for (int i=0; i<n; i++) {
                 
-                //alkusolmun koordinaatit
-                if (luku==a-1) {
+                //start node coordinates
+                if (value==a-1) {
                     ai=i;
                     aj=j;
                 }
                 
-                //loppusolmun koordinaatit
-                if (luku==l-1) {
+                //end node coordinates
+                if (value==l-1) {
                     li=i;
                     lj=j;
                 }
                 
-                verkko[i][j] = solmut[luku];
-                luku++;
+                graph[i][j] = nodes[value];
+                value++;
             }
         }
-
-        ArrayList<Node>[] vl = new ArrayList[solmut.length+1];
-        for (int i=1; i<=solmut.length; i++) {
-            vl[i]=new ArrayList<Node>();
-        }
-        //VIERUSLISTA
         
+        //Adjacency list
+        Node[][] vl = new Node[nodes.length][];
+        for (int i=0; i<nodes.length; i++) {
+            vl[i]=new Node[4];
+        }
+        //adjacency list for A*
         if (alg=="a" || alg=="A") {
-            int x = 1;
-            lista[x]=new Node(x,INFINITE_VALUE,h(1,0,li,lj));
-            for (int j=0; j<n; j++) {
-                for (int i=0; i<m; i++) {
-
-                    //Solmu-oliot listaan (täällä lista[1] jää null)
-                    if (lista[x-1]==null) {
-                        lista[x-1]=new Node(x-1, INFINITE_VALUE,h(i,j,li,lj));
-                    }
-
-                    if (i==1 && j==0){
-                        //vasen yläkulma
-                        vl[x].add(new Node(1,INFINITE_VALUE,h(1,0,li,lj))); //seuraava solmu
-                        vl[x].add(new Node(m,INFINITE_VALUE,h(0,1,li,lj))); //alempi solmu
-                        x++;
-
-                    }
-                    if (i==m-1 && j==0){
-                        //oikea yläkulma
-                        vl[x].add(new Node(m-2,INFINITE_VALUE,h(m-2,0,li,lj))); //edellinen solmu
-                        vl[x].add(new Node((m*2)-1,INFINITE_VALUE,h(m-1, 1,li,lj))); //alempi solmu
-                        x++;
-
-                    }
-                    if (x==m*(n-1)+1 && j==n-1) {
-                        //vasen alakulma
-                        vl[x].add(new Node(m*(n-2),INFINITE_VALUE,h(0, n-1, li, lj))); //ylempi solmu
-                        vl[x].add(new Node(m*(n-1)+1,INFINITE_VALUE,h(1,j,li,lj))); //seuraava solmu
-                        x++;
-                    }
-                    if (x==m*n && j==n) {
-                        //oikea alakulma
-                        vl[x].add(new Node(m*(n-1)-1,INFINITE_VALUE,h(0,n-2,li,lj))); //ylempi solmu
-                        vl[x].add(new Node(m*n-2,INFINITE_VALUE,h(m-2, n-1, li, lj))); //edeltävä solmu
-                        x++;
-                    }
-
-
-                    //Verkon reunoilla olevat solmut (ei kulmasolmut)
-                    if (j==0 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
-                        //yläreuna
-                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edeltävä 
-                        vl[x].add(new Node(i+m, INFINITE_VALUE,h(i,j+1,li,lj))); //alla oleva
-                        vl[x].add(new Node(x,INFINITE_VALUE,h(x,j,li,lj))); //seuraava
-                        x++;
-
-                    }
-                    if (i==0 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
-                        //vasen reuna
-                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi 
-                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj))); //seuraava
-                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //alempi
-                        x++;
-
-                    }
-                    if (i==m-1 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
-                        //oikea reuna
-                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi
-                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //alempi
-                        x++;
-
-                    }
-                    if (j==n-1 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
-                        //alareuna
-                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylempi
-                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj)));//seuraava
-                        x++;
-
-
-                    // Muut solmut, joilla 4 vierussolmua
-                    } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1){
-                        vl[x].add(new Node(x-m-1,INFINITE_VALUE,h(i,j-1,li,lj))); //ylä
-                        vl[x].add(new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj))); //ala
-                        vl[x].add(new Node(x-2,INFINITE_VALUE,h(i-1,j,li,lj))); //edellinen
-                        vl[x].add(new Node(x,INFINITE_VALUE,h(i+1,j,li,lj))); //oikea
-                        x++;
-
-                    }
-                }
-            }
+            initializeAAdjList(nodes, vl, m,n, list);
         }
-        //Vieruslista Dijkstralle
+        //adjacency list for Dijkstra
         if (alg == "d" || alg == "D") {
-            int x = 1;
-            lista[x]=new Node(x,solmut[x],INFINITE_VALUE);
-            for (int j=0; j<n; j++) {
-                for (int i=0; i<m; i++) {
-
-                    //Solmu-oliot listaan (täällä lista[1] jää null)
-                    if (lista[x-1]==null) {
-                        lista[x-1]=new Node(x-1, solmut[x-1],INFINITE_VALUE);
-                    }
-
-                    if (i==1 && j==0){
-                        //vasen yläkulma
-                        vl[x].add(new Node(1,solmut[1],INFINITE_VALUE)); //seuraava solmu
-                        vl[x].add(new Node(m,solmut[m],INFINITE_VALUE)); //alempi solmu
-                        x++;
-
-                    }
-                    if (i==m-1 && j==0){
-                        //oikea yläkulma
-                        vl[x].add(new Node(m-2,solmut[m-2],INFINITE_VALUE)); //edellinen solmu 
-                        vl[x].add(new Node((m*2)-1,solmut[m*2-1], INFINITE_VALUE)); //alempi solmu
-                        x++;
-
-                    }
-                    if (x==m*(n-1)+1 && j==n-1) {
-                        //vasen alakulma
-                        vl[x].add(new Node(m*(n-2),solmut[m*(n-2)], INFINITE_VALUE)); //ylempi solmu
-                        vl[x].add(new Node(m*(n-1)+1,solmut[m*(n-1)], INFINITE_VALUE)); //seuraava solmu
-                        x++;
-                    }
-                    if (x==m*n && j==n) {
-                        //oikea alakulma
-                        vl[x].add(new Node(m*(n-1)-1,solmut[m*(n-1)], INFINITE_VALUE)); //ylempi solmu
-                        vl[x].add(new Node(m*n-2,solmut[m*n-2], INFINITE_VALUE)); //edeltävä solmu
-                        x++;
-                    }
-
-
-                    //Verkon reunoilla olevat solmut (ei kulmasolmut)
-                    if (j==0 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
-                        //yläreuna
-                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edeltävä 
-                        vl[x].add(new Node(i+m, solmut[i+m], INFINITE_VALUE)); //alla oleva
-                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //seuraava
-                        x++;
-
-                    }
-                    if (i==0 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
-                        //vasen reuna
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi 
-                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //seuraava
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //alempi
-                        x++;
-
-                    }
-                    if (i==m-1 && vl[x].isEmpty() && j!=0 && j!=n-1) { 
-                        //oikea reuna
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi
-                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //alempi
-                        x++;
-
-                    }
-                    if (j==n-1 && vl[x].isEmpty() && i!=0 && i!=m-1) { 
-                        //alareuna
-                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylempi
-                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE));//seuraava
-                        x++;
-
-
-                    // Muut solmut, joilla 4 vierussolmua
-                    } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1){
-                        vl[x].add(new Node(x-m-1,solmut[x-m-1], INFINITE_VALUE)); //ylä
-                        vl[x].add(new Node(x+m-1,solmut[x+m-1], INFINITE_VALUE)); //ala
-                        vl[x].add(new Node(x-2,solmut[x-2], INFINITE_VALUE)); //edellinen
-                        vl[x].add(new Node(x,solmut[x], INFINITE_VALUE)); //oikea
-                        x++;
-
-                    }
-                }
-            }
+            initializeDAdjList(nodes, vl, m,n, list);
         }
-        //printVieruslista(vl);
-        FindPath.shortestPath(lista, vl, a, l, alg, solmut);
+        FindPath.shortestPath(list, vl, a, l, alg, nodes);
+        /*for (int i=0; i<vl.length; i++) {
+            System.out.println(i+ " => ");
+            for (Node solmu: vl[i]) {
+                System.out.println(solmu);
+            }
+        }*/
     }
     
-    
+    //heuristic function
     public int h( int ai, int aj, int bi, int bj) { 
         int lop = Math.abs(ai-bi)+Math.abs(aj-bj);
         return lop;
     }
 
+    public void initializeDAdjList(int[] nodes, Node[][] vl, int m, int n, Node[] list) {
+        
+        int x = 0;
+            list[1]=new Node(1,nodes[1],INFINITE_VALUE);
+            for (int j=0; j<n; j++) {
+                for (int i=0; i<m; i++) {
+
+                if (list[x]==null) { list[x]= new Node(x, nodes[x],INFINITE_VALUE); }
+                
+                //---------Corner-nodes---------
+                //left upper corner
+                if (i==0 && j==0) {
+                    vl[0][0]=new Node(1,nodes[1],INFINITE_VALUE); //next node
+                    vl[0][1]=new Node(m,nodes[m],INFINITE_VALUE); //node below
+                    x++;
+                }
+                //right upper corner
+                if (i==m-1 && j==0) {
+                    vl[i][0]=new Node(m-2,nodes[m-2],INFINITE_VALUE); //previous node
+                    vl[i][1]=new Node((m*2)-1,nodes[m*2-1], INFINITE_VALUE); //node below
+                    x++;
+                }
+                //left bottom corner
+                if (x==m*(n-1) && j==n-1) {
+                    vl[x][0]=new Node(m*(n-2),nodes[m*(n-2)], INFINITE_VALUE); //upper node
+                    vl[x][1]=new Node(m*(n-1)+1,nodes[x+1], INFINITE_VALUE); //next node
+                    x++;
+                }
+                //right bottom corner    
+                if (i==m-1 && j==m-1) {
+                    vl[m*m-1][0]=new Node(m*(n-1)-1,nodes[m*(n-1)], INFINITE_VALUE); //upper node
+                    vl[m*m-1][1]=new Node(m*n-2,nodes[m*n-2], INFINITE_VALUE); //previous node
+                    x++;
+                }
+
+                //---------Other-border-nodes---------
+                //upper edge
+                if (j==0 && i!=m-1 && i!=0 ) {
+                    System.out.println(x); 
+                    vl[x][0]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous node 
+                    vl[x][1]=new Node(i+m, nodes[i+m], INFINITE_VALUE); //node below
+                    vl[x][2]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next node
+                    x++;  
+                }
+                //left border
+                if (i==0 && j!=0 && j!=m-1) {
+                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
+                    vl[x][1]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next
+                    vl[x][2]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //bottom
+                    x++;
+                }
+                //right border
+                if (i==m-1 && j!=0 && j!=n-1) {
+                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
+                    vl[x][1]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
+                    vl[x][2]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //below
+                    x++;
+                }
+                //foot
+                if (j==n-1 && i!=0 && i!=m-1) { 
+                    vl[x][0]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
+                    vl[x][1]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
+                    vl[x][2]=new Node(x+1,nodes[x+1], INFINITE_VALUE);//next
+                    x++;
+
+                //---------Middle-nodes---------
+                } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1) {
+                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper 
+                    vl[x][1]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //bottom
+                    vl[x][2]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
+                    vl[x][3]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next
+                    x++;
+                }
+            }    
+        }
+    }
+    
+    public void initializeAAdjList(int[] nodes, Node[][] vl, int m, int n,  Node[] list) {
+        
+        int x = 0;
+            list[1]=new Node(1,nodes[1],INFINITE_VALUE);
+            for (int j=0; j<n; j++) {
+                for (int i=0; i<m; i++) {
+
+                if (list[x]==null) { list[x]= new Node(x,INFINITE_VALUE,h(i,j,li,lj)); }
+
+                //left upper corner
+                if (i==0 && j==0) {
+                    vl[0][0]=new Node(1,INFINITE_VALUE,h(1,0,li,lj)); //next node
+                    vl[0][1]=new Node(m,INFINITE_VALUE,h(0,1,li,lj)); //node below
+                    x++;
+                }
+                //right upper corner
+                if (i==m-1 && j==0) {
+                    vl[i][0]=new Node(m-2,INFINITE_VALUE,h(m-2,0,li,lj)); //previous node
+                    vl[i][1]=new Node(i+m,INFINITE_VALUE,h(m-1, 1,li,lj)); //node below
+                    x++;
+                }
+                //left bottom corner
+                if (x==m*(n-1) && j==n-1) {
+                    vl[x][0]=new Node(m*(n-2),INFINITE_VALUE,h(0, n-1, li, lj)); //upper node
+                    vl[x][1]=new Node(m*(n-1)+1,INFINITE_VALUE,h(1,j,li,lj)); //next node
+                    x++;
+                }
+                //right bottom corner    
+                if (i==m-1 && j==m-1) {
+                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(0,n-2,li,lj)); //upper node
+                    vl[x][1]=new Node(x-1,INFINITE_VALUE,h(m-2, n-1, li, lj)); //previous node
+                    x++;
+                }
+
+                //---------Other-border-nodes---------
+                //upper edge
+                if (j==0 && i!=m-1 && i!=0 ) {
+                    vl[x][0]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous node 
+                    vl[x][1]=new Node(i+m, INFINITE_VALUE,h(i,j+1,li,lj)); //node below
+                    vl[x][2]=new Node(x+1,INFINITE_VALUE,h(x,j,li,lj)); //next node
+                    x++;  
+                }
+                //left border
+                if (i==0 && j!=0 && j!=m-1) {
+                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
+                    vl[x][1]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj)); //next
+                    vl[x][2]=new Node(x+m,INFINITE_VALUE,h(i,j+1,li,lj)); //bottom
+                    x++;
+                }
+                //right border
+                if (i==m-1 && j!=0 && j!=n-1) {
+                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
+                    vl[x][1]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
+                    vl[x][2]=new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj)); //below
+                    x++;
+                }
+                //foot
+                if (j==n-1 && i!=0 && i!=m-1) { 
+                    vl[x][0]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
+                    vl[x][1]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
+                    vl[x][2]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj));//next
+                    x++;
+
+                //---------Middle-nodes---------
+                } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1) {
+                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper 
+                    vl[x][1]=new Node(x+m,INFINITE_VALUE,h(i,j+1,li,lj)); //bottom
+                    vl[x][2]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
+                    vl[x][3]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj)); //next
+                    x++;
+                }
+            }    
+        }
+    }
+
 
     public static void main(String[] args) {
         
-        //ohjelman suoritus netbeanssissä
+        //running in NetBeans
 
-        //Verkko test = new Verkko(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,3,5,3}, 1, 12, 4, 4, "d");
-        //test.alustus();
+        Verkko test = new Verkko(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
+        test.init();
         
-        //Verkko koe=new Verkko(new int[]{1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1},1,35,6,6,"a");
-        //koe.alustus();
+        //Graph koe=new Graph(new int[]{1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1},1,35,6,6,"a");
+        //koe.init();
         
-        // /*
-        Verkko koe=new Verkko(new int[]{1,2,2,2,2,2,9,9,9,7,
+         /*
+        Graph koe=new Graph(new int[]{1,2,2,2,2,2,9,9,9,7,
                                         3,3,3,4,3,4,3,2,1,2,
                                         5,5,5,5,6,6,6,7,3,1,
                                         3,4,4,4,4,4,2,2,1,1,
@@ -278,14 +274,15 @@ public class Verkko {
                                         3,3,3,4,3,4,3,2,1,2,
                                         5,5,5,5,6,6,6,7,3,1,
                                         3,4,4,4,4,4,4,4,4,2,
-                                        2,1,1,7,7,7,7,3,3,2 }, 1, 99, 10,10,"d");
-        koe.alustus();
-        // */
+                                        2,1,1,7,7,7,7,3,3,2 }, 1, 99, 10,10,"a");
+        koe.init();
+        */
         
-        //alla oleva toimii kun käynnistetään komentoriviltä
+        //running in terminal
         
         
-        //Komentorivikutsu: mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko 
+        //command: 
+        //mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko 
         //                -Dexec.args="1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1, 1 35 6 6 d"
         
         /*

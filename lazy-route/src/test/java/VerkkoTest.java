@@ -20,17 +20,19 @@ import static org.junit.Assert.*;
  */
 public class VerkkoTest {
     
-    Verkko testi;
+    Verkko test;
+    Node[] list;
     
     @Before
     public void setUp() {
         int[] painot = new int[]{4,3,2,1,1,2,3,4,3,4,2,1,1,4,2,3};
-        testi = new Verkko(painot, 1,16,4,4,"d");
+        test = new Verkko(painot, 1,16,4,4,"d");
     }    
     
     @Test
     public void toimiikoH() {
-        assertEquals(1,testi.h(2,1,1,1));
-        assertEquals(7,testi.h(1,2,7,3));
+        assertEquals(1,test.h(2,1,1,1));
+        assertEquals(7,test.h(1,2,7,3));
     }
+    
 }
