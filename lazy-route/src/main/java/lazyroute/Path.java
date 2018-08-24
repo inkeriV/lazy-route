@@ -16,14 +16,46 @@ import static lazyroute.Pino.createPino;
 
 /*
 
-Computing happens here. Dijkstra and A*.
-
-*/
-public class FindPath {
+Path class has a Path-object which includes:
+    int array - has the node id's of the nodes in the shortest path from start node to end node
+    int - the weight of the path (start node weight not included)
+    int - the number of nodes in the shortest path including start and end nodes
     
-    /* Initializes arrays and the heap for both algorithms */
-    public static void shortestPath(Node[] list, Node[][] vl, int a, int l, String alg, int[] nodes) { //ArrayList<Node>[] vl
-        
+    shortestPath method returns a Path object to the very first method called. ShortestPath method calls either
+    Dijkstra or AStar.
+
+    Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
+    shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
+*/
+public class Path {
+    
+    public int[] nodepath;
+    public int totalweight;
+    public int nodecount;
+    
+    public Path() {
+        nodepath=null;
+        totalweight=0;
+        nodecount=0;
+    }
+    
+    public void setPath(int[] path) {
+        nodepath=path;
+    }
+    public void setWeightOfPath(int value) {
+        totalweight+=value;
+    }
+    public void setNumberOfNodesInPath() {
+        nodecount++;
+    }
+    public int getNumberOfNodesInPath() {
+        return nodecount;
+    }
+    
+    /* Returns Path-object
+    */
+    public static Path shortestPath(Node[] list, Node[][] vl, int a, int l, String alg, int[] nodes) { 
+
         PriorityQueue<Node> heap = new PriorityQueue<Node>();
 
         boolean[] checked = new boolean[list.length];
@@ -33,10 +65,8 @@ public class FindPath {
             list[a-1].dist=0;
             
             for (int i=0; i<list.length; i++) {   
-            checked[i]=false;
-            heap.add(list[i]);
+                heap.add(list[i]);
             }
-            
             dijkstra( vl, a, l, nodes, checked, path, heap); 
             
         } else {
@@ -46,9 +76,38 @@ public class FindPath {
             checked[i]=false;
             heap.add(list[i]);
             }
-            
             astar( vl, a, l, nodes, checked, path, heap);   
         }
+        
+        //new Path object, the one we are returning
+        Path resultpath = new Path();
+        Pino stack = createPino();
+        
+        int u = path[l-1];
+        resultpath.setNumberOfNodesInPath(); //adding end node to the count 
+        resultpath.setWeightOfPath(nodes[u]); //the weight of the end node
+
+        
+        while (u != a-1) {
+            stack.addPinoon(u);
+            u = path[u];
+            resultpath.setNumberOfNodesInPath();
+            resultpath.setWeightOfPath(nodes[u]);
+        }
+        resultpath.setNumberOfNodesInPath();
+        
+        resultpath.nodepath=new int[resultpath.getNumberOfNodesInPath()];
+        resultpath.nodepath[0]=a;
+        int apu=1;
+        while (!stack.isEmpty()) {
+            u = stack.popPino();
+            resultpath.nodepath[apu]=u+1;
+            
+            apu++;
+        }
+        resultpath.nodepath[resultpath.nodepath.length-1]=l;
+        
+        return resultpath;
     }
     
     private static void dijkstra( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, PriorityQueue<Node> heap) {
@@ -88,7 +147,6 @@ public class FindPath {
                 }
             }        
         }
-        System.out.println(returnPath(path, a, l));
     }    
     
     private static void astar( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, PriorityQueue<Node> heap) {
@@ -129,27 +187,19 @@ public class FindPath {
                 }    
             }
         }
-        System.out.println(returnPath(path, a, l));
     }
-    private static String returnPath(int[] reitti, int a, int l) {
-        String result="";
-        
-        //int u is the index of the node which was in the path before the end node
-        int u = reitti[l-1];
-        Pino pino = createPino();
-        
-        //moving backwards in the path until we reach start node
-        while (u != a-1) { 
-            System.out.println(u);
-            pino.addPinoon(u);
-            u = reitti[u]; 
+    
+    public String ToString(Path obj) {
+        String result="Shortest path between given start node and end node:\n";
+        for (int i=0; i<nodepath.length; i++) {
+            if (i==nodepath.length-1) {
+                result+=nodepath[i]+"\n";
+            } else {
+            result+=nodepath[i]+" => ";
+            }
         }
-        result+=a+" => "; 
-        while (!pino.isEmpty()) { 
-            u=pino.popPino();
-            result+=u+1+" => ";
-        }
-        result+=l;
-        return result;
+        result+="The weight of this path is: "+totalweight+"\n";
+        result+="The number of nodes in this path is: "+nodecount;
+        return result+"\n";
     }
 }

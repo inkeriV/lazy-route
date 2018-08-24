@@ -13,7 +13,7 @@ import lazyroute.Node;
  */
 
 
-public class Verkko {
+public class Graph {
     
     //start node coordinates in graph
     private int ai;
@@ -26,14 +26,17 @@ public class Verkko {
     //infinite value
     private static final int INFINITE_VALUE=1000000000;//Integer.MAX_VALUE;
     
-    public int[] nodes;
-    public int a;
-    public int l;
-    public int m;
-    public int n;
-    public String alg;
+    private int[] nodes;
+    private int a;
+    private int l;
+    private int m;
+    private int n;
+    private String alg;
     
-    public Verkko (int[] s, int alku, int loppu, int lev, int pit, String al) {
+    private static Path path;
+
+    
+    public Graph (int[] s, int alku, int loppu, int lev, int pit, String al) {
         nodes = s;
         a = alku;
         l = loppu;
@@ -44,7 +47,6 @@ public class Verkko {
      
   
     //creating graph presentations
-    //private Node[] list;
     public void init() {
         Node[] list = new Node[nodes.length] ;
         //list = new Node[nodes.length];
@@ -80,19 +82,14 @@ public class Verkko {
         }
         //adjacency list for A*
         if (alg=="a" || alg=="A") {
-            initializeAAdjList(nodes, vl, m,n, list);
+            AdjacencyLforA(nodes, vl, m,n, list);
         }
         //adjacency list for Dijkstra
         if (alg == "d" || alg == "D") {
-            initializeDAdjList(nodes, vl, m,n, list);
+            AdjacencyLforD(nodes, vl, m,n, list);
         }
-        FindPath.shortestPath(list, vl, a, l, alg, nodes);
-        /*for (int i=0; i<vl.length; i++) {
-            System.out.println(i+ " => ");
-            for (Node solmu: vl[i]) {
-                System.out.println(solmu);
-            }
-        }*/
+        path=Path.shortestPath(list, vl, a, l, alg, nodes);
+        
     }
     
     //heuristic function
@@ -101,7 +98,7 @@ public class Verkko {
         return lop;
     }
 
-    public void initializeDAdjList(int[] nodes, Node[][] vl, int m, int n, Node[] list) {
+    public Node[][] AdjacencyLforD(int[] nodes, Node[][] vl, int m, int n, Node[] list) {
         
         int x = 0;
             list[1]=new Node(1,nodes[1],INFINITE_VALUE);
@@ -139,7 +136,6 @@ public class Verkko {
                 //---------Other-border-nodes---------
                 //upper edge
                 if (j==0 && i!=m-1 && i!=0 ) {
-                    System.out.println(x); 
                     vl[x][0]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous node 
                     vl[x][1]=new Node(i+m, nodes[i+m], INFINITE_VALUE); //node below
                     vl[x][2]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next node
@@ -176,9 +172,10 @@ public class Verkko {
                 }
             }    
         }
+        return vl;
     }
     
-    public void initializeAAdjList(int[] nodes, Node[][] vl, int m, int n,  Node[] list) {
+    public Node[][] AdjacencyLforA(int[] nodes, Node[][] vl, int m, int n,  Node[] list) {
         
         int x = 0;
             list[1]=new Node(1,nodes[1],INFINITE_VALUE);
@@ -251,18 +248,26 @@ public class Verkko {
                 }
             }    
         }
+        return vl;
     }
 
 
     public static void main(String[] args) {
         
         //running in NetBeans
-
-        Verkko test = new Verkko(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
+        Graph test = new Graph(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
         test.init();
+        System.out.println(path.ToString(path));
         
-        //Graph koe=new Graph(new int[]{1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1},1,35,6,6,"a");
-        //koe.init();
+        int[] nodes = new int[]{  10,10,10,10,10,
+                                  10,10,5,5,10,
+                                  10,5,5,10,10,
+                                  10,5,10,10,10,
+                                  10,10,10,10,10};
+        Graph test2 =  new Graph(nodes, 16, 4, 5, 5, "d");
+        test2.init();
+        System.out.println(path.ToString(path));
+        
         
          /*
         Graph koe=new Graph(new int[]{1,2,2,2,2,2,9,9,9,7,
@@ -277,7 +282,7 @@ public class Verkko {
                                         2,1,1,7,7,7,7,3,3,2 }, 1, 99, 10,10,"a");
         koe.init();
         */
-        
+        //------------------------------------------------------------
         //running in terminal
         
         
