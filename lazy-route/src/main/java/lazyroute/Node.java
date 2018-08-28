@@ -24,21 +24,21 @@ paino: node's weight, dist: distance from end node.
 public class Node implements Comparable<Node> {
     
     public int id;
-    public int paino;
+    public int weight;
     public int dist;
     
     public Node(int nid, int npaino, int ndist) {
         id = nid;
-        paino = npaino;
+        weight = npaino;
         dist = ndist;
     }
     
     @Override
     public int compareTo(Node a) { 
-        if (dist+paino<a.dist+a.paino) {
+        if (dist+weight<a.dist+a.weight) {
             return -1;
         }
-        if (dist+paino>a.dist+a.paino) {
+        if (dist+weight>a.dist+a.weight) {
             return 1;
         }
         return 0;
@@ -46,7 +46,7 @@ public class Node implements Comparable<Node> {
     
     @Override
     public String toString() {
-        return  id+", "+paino+", "+dist;
+        return  id+", "+weight+", "+dist;
     }
     
 }

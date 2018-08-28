@@ -28,7 +28,7 @@ public class NodeTest {
     @Test
     public void solmunLuonti() {
         assertEquals(1,solmu.id);
-        assertEquals(4,solmu.paino);
+        assertEquals(4,solmu.weight);
         assertEquals(5,solmu.dist);
     }
     
@@ -39,8 +39,8 @@ public class NodeTest {
     }
     @Test
     public void arvojenVaihtoPaino() {
-        solmu.paino=100001;
-        assertEquals(100001,solmu.paino);
+        solmu.weight=100001;
+        assertEquals(100001,solmu.weight);
     }
     @Test
     public void arvojenVaihtoDist() {
@@ -57,7 +57,7 @@ public class NodeTest {
     public void toimiikoCompareTo() {
         Node uusi = new Node(3,3,3);
         assertEquals(-1,uusi.compareTo(solmu));
-        uusi.paino=7;
+        uusi.weight=7;
         assertEquals(1,uusi.compareTo(solmu));
         solmu.dist++;
         assertEquals(0,uusi.compareTo(solmu));

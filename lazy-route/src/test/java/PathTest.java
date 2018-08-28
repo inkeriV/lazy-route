@@ -6,6 +6,7 @@
 
 import java.util.PriorityQueue;
 import lazyroute.Graph;
+import lazyroute.Heap;
 import lazyroute.Node;
 import lazyroute.Path;
 import static lazyroute.Path.shortestPath;
@@ -82,8 +83,6 @@ public class PathTest {
         }
         Node[] list = new Node[25];
         vl=test.AdjacencyLforA(nodes,vl,5,5,list);
-        
-        PriorityQueue<Node> heap = new PriorityQueue<Node>();
          
         obj=shortestPath(list,vl,16,4,"A",nodes);
        
@@ -94,6 +93,5 @@ public class PathTest {
         assertEquals(8,obj.nodepath[4]);
         assertEquals(9,obj.nodepath[5]);
         assertEquals(4,obj.nodepath[6]); //end node
-    }
-    
+    }  
 }

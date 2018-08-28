@@ -56,27 +56,34 @@ public class Path {
     */
     public static Path shortestPath(Node[] list, Node[][] vl, int a, int l, String alg, int[] nodes) { 
 
-        PriorityQueue<Node> heap = new PriorityQueue<Node>();
+        //PriorityQueue<Node> heap = new PriorityQueue<Node>();
+        Heap minheap = new Heap();
+        
 
         boolean[] checked = new boolean[list.length];
+        for (int i=0; i<list.length; i++) {
+            checked[i]=false;
+        }
         int[] path = new int[list.length];
         
         if (alg == "d" || alg == "D") {
             list[a-1].dist=0;
+            minheap.createHeap(list);
             
-            for (int i=0; i<list.length; i++) {   
+            /*for (int i=0; i<list.length; i++) {   
                 heap.add(list[i]);
-            }
-            dijkstra( vl, a, l, nodes, checked, path, heap); 
+            }*/
+            dijkstra( vl, a, l, nodes, checked, path, minheap); 
             
         } else {
-            list[a-1].paino=0;
+            list[a-1].weight=0;
+            minheap.createHeap(list);
             
-            for (int i=0; i<list.length; i++) {   
+            /*for (int i=0; i<list.length; i++) {   
             checked[i]=false;
             heap.add(list[i]);
-            }
-            astar( vl, a, l, nodes, checked, path, heap);   
+            }*/
+            astar( vl, a, l, nodes, checked, path, minheap);   
         }
         
         //new Path object, the one we are returning
@@ -110,17 +117,17 @@ public class Path {
         return resultpath;
     }
     
-    private static void dijkstra( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, PriorityQueue<Node> heap) {
+    private static void dijkstra( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, Heap minheap) {
        
         while (checked[l-1]==false) { //while the end node (kept record by its id) has not been dealt with
             
-            Node nyk = heap.poll(); 
+            Node nyk = minheap.popMin(); 
             checked[nyk.id]=true; 
                
             for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
                 if (vierus!=null) {         //that are not null
                     
-                    if (nyk.dist+vierus.paino < vierus.dist) {
+                    if (nyk.dist+vierus.weight < vierus.dist) {
                         
                         /*
                         if node's value is changed, we have to change its value everywhere it appears
@@ -132,7 +139,7 @@ public class Path {
                                 if (k!=null) {      //that are not null..  
                                     
                                     if (k.id==vierus.id) {
-                                        k.dist = nyk.paino + nodes[vierus.id];
+                                        k.dist = nyk.weight + nodes[vierus.id];
                                     }
                                 }    
                             }
@@ -141,7 +148,7 @@ public class Path {
                         since nodes already put in the heap cannot be changed, we have to create a new node
                         with the same id, but with changed values
                         */
-                        heap.add(new Node(vierus.id, vierus.paino, vierus.dist));
+                        minheap.add(new Node(vierus.id, vierus.weight, vierus.dist));
                         path[vierus.id]=nyk.id; 
                     }
                 }
@@ -149,18 +156,18 @@ public class Path {
         }
     }    
     
-    private static void astar( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, PriorityQueue<Node> heap) {
+    private static void astar( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, Heap minheap) {
 
         while (checked[l-1]==false) { //while the end node (kept record by its id) has not been dealt with
 
-            Node nyk = heap.poll();
+            Node nyk = minheap.popMin();
 
-            checked[nyk.id]=true; 
+            checked[nyk.id]=true; //null pointer exception -___- keossa jtn väärin, ei pitäis olla null
 
             for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
                 if (vierus!=null) {         //that are not null
                     
-                    if (vierus.paino > nyk.paino + nodes[vierus.id]) {
+                    if (vierus.weight > nyk.weight + nodes[vierus.id]) {
                         
                         /*
                         if node's value is changed, we have to change its value everywhere it appears
@@ -172,7 +179,7 @@ public class Path {
                                 if (k!=null) {      //that are not null
                                     
                                     if (k.id==vierus.id) {
-                                        k.paino = nyk.paino + nodes[vierus.id];
+                                        k.weight = nyk.weight + nodes[vierus.id];
                                     }
                                 }    
                             }
@@ -181,7 +188,7 @@ public class Path {
                         since nodes already put in the heap cannot be changed, we have to create a new node
                         with the same id, but with changed values
                         */    
-                        heap.add(new Node(vierus.id, vierus.paino, vierus.dist));
+                        minheap.add(new Node(vierus.id, vierus.weight, vierus.dist));
                         path[vierus.id] = nyk.id;
                     }
                 }    

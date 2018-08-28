@@ -45,7 +45,7 @@ public class GraphTest {
         for (Node kaikki:tulos[i]) {
             if (kaikki!=null) {
                 assertEquals(1000000000,kaikki.dist);
-                assertEquals(kaikki.paino, weights[kaikki.id]);
+                assertEquals(kaikki.weight, weights[kaikki.id]);
                 i++;
             }    
         }
@@ -60,7 +60,7 @@ public class GraphTest {
         int i=0;
         for (Node kaikki:tulos[i]) {
             if (kaikki!=null) {
-                assertEquals(1000000000,kaikki.paino);
+                assertEquals(1000000000,kaikki.weight);
                 i++;
             }    
         }
