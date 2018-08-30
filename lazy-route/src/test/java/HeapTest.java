@@ -5,6 +5,7 @@
  */
 
 import java.util.PriorityQueue;
+import junit.framework.Assert;
 import lazyroute.Heap;
 import lazyroute.Node;
 import org.junit.After;
@@ -28,6 +29,7 @@ public class HeapTest {
     }
     
     @Test
+    // testing if heap returns same node values as java.util.PriorityQueue
     public void isHeapOrderCorrect() {
         Node[] list = new Node[] {
             new Node(1,1,1), new Node(2,1,1), new Node(3,1,2),
@@ -53,5 +55,108 @@ public class HeapTest {
             stack.poll();
             heap.popMin();
         }     
+    }
+    
+    @Test
+    public void heapConstructorWorks() {
+        assertEquals(1000, heap.harray.length);
+        assertEquals(-1, heap.size);
+        assertEquals(1000,heap.length);
+    }
+    
+    @Test
+    public void addingWorksAndSizeIsRigthAfterThat() {
+        heap.add(new Node(1,1,1));
+        assertEquals("1, 1, 1",heap.peekMinNode().toString());
+        assertEquals(0, heap.size);
+    }
+    
+    @Test
+    public void sizeIsCorrectAfterPopping() {
+        heap.add(new Node(1,1,1));
+        assertEquals(0, heap.size);
+        heap.add(new Node(2,1,1));
+        heap.popMin();
+        heap.popMin();
+        assertEquals(-1, heap.size);           
+    }
+    
+    @Test
+    public void addMethodCallsSizeDoubleingCorrectly() {
+        for (int i=0; i<2600; i++) {
+            heap.add(new Node(1,1,1));
+        }
+        assertEquals(4000, heap.harray.length);
+        assertEquals(2599, heap.size);
+    }
+    
+    @Test
+    public void popWorks() {
+        heap.add(new Node(1,1,3));
+        heap.add(new Node(2,1,4));
+        heap.add(new Node(3,5,1));
+        
+        assertEquals("1, 1, 3", heap.popMin().toString());    
+    }
+    
+    @Test
+    public void bubbleUPWorks() {
+        heap.add(new Node(1,1,3));
+        heap.add(new Node(2,1,4));
+        heap.add(new Node(3,5,1));
+        
+        assertEquals("1, 1, 3", heap.peekMinNode().toString());
+        assertEquals(4, heap.peekMinValue());
+        
+        heap.add(new Node(4,2,1));
+        
+        assertEquals(3, heap.peekMinValue());
+        
+        heap.add(new Node(5,1,1));
+        
+        assertEquals(2, heap.peekMinValue());
+    }
+    
+    @Test
+    public void bubbleDownWorks() {
+        heap.add(new Node(1,1,3));
+        heap.add(new Node(3,5,1));
+        heap.add(new Node(2,1,4));
+        
+        heap.popMin();
+        
+        assertEquals("2, 1, 4", heap.popMin().toString());
+        assertEquals(6, heap.peekMinValue());
+    }
+    
+    @Test
+    public void doubleSizeWorks() {
+        heap.doubleSize();
+        assertEquals(2000, heap.harray.length);
+        heap.doubleSize();
+        assertEquals(4000, heap.harray.length);
+    }
+    
+    @Test
+    public void bothPeekMethodsWork() {
+        assertEquals(null, heap.peekMinNode());
+        assertEquals(-1 , heap.peekMinValue());
+        
+        heap.add(new Node(1,233, 99));
+        heap.add(new Node(2, 1000, 1000));
+        
+        assertEquals("1, 233, 99", heap.peekMinNode().toString());
+        assertEquals(332 , heap.peekMinValue());
+    }
+    
+    @Test 
+    public void bothPeeksWontPop() {
+        heap.add(new Node(1,233, 99));
+        heap.add(new Node(2, 1000, 1000));
+        
+        heap.peekMinNode();
+        heap.peekMinValue();
+        
+        assertEquals("1, 233, 99", heap.popMin().toString());
     }
 }

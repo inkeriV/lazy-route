@@ -7,7 +7,7 @@ package lazyroute;
 
 
 import java.util.PriorityQueue;
-import static lazyroute.Pino.createPino;
+import static lazyroute.Stack.createStack;
 
 /**
  *
@@ -88,7 +88,7 @@ public class Path {
         
         //new Path object, the one we are returning
         Path resultpath = new Path();
-        Pino stack = createPino();
+        Stack stack = createStack();
         
         int u = path[l-1];
         resultpath.setNumberOfNodesInPath(); //adding end node to the count 
@@ -96,7 +96,7 @@ public class Path {
 
         
         while (u != a-1) {
-            stack.addPinoon(u);
+            stack.addToStack(u);
             u = path[u];
             resultpath.setNumberOfNodesInPath();
             resultpath.setWeightOfPath(nodes[u]);
@@ -107,7 +107,7 @@ public class Path {
         resultpath.nodepath[0]=a;
         int apu=1;
         while (!stack.isEmpty()) {
-            u = stack.popPino();
+            u = stack.popStack();
             resultpath.nodepath[apu]=u+1;
             
             apu++;

@@ -66,4 +66,20 @@ public class GraphTest {
         }
     }
     
+    @Test
+    public void areStartAndEndNodeCoordinatesCorrectAndDoGetsReturnThemRight() {
+        Graph g = new Graph(new int[]{  4,4,4,4,4,
+                                        4,4,4,4,4,
+                                        4,4,4,4,4,
+                                        4,4,4,4,4,
+                                        4,4,4,4,4 }, 7, 24, 5, 5, "a");
+        g.init();
+        
+        assertEquals(1, g.getStartNodeCoordinateI());
+        assertEquals(1, g.getStartNodeCoordinateJ());
+        
+        assertEquals(3, g.getEndNodeCoordinateI());
+        assertEquals(4, g.getEndNodeCoordinateJ());    
+    }
+    
 }

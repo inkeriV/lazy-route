@@ -17,9 +17,9 @@ package lazyroute;
 public class Heap { 
 
     
-    private Node[] harray;
-    private int length ;//length of the array
-    private int size; //number of nodes in the array
+    public Node[] harray;
+    public int length ;//length of the array
+    public int size; //number of nodes in the array
     
     private static final int START_SIZE=1000; 
     
@@ -116,7 +116,7 @@ public class Heap {
         
     public void doubleSize() {
         
-        Node[] newHeap = (Node[]) new Comparable[harray.length*2]; //New array double its last size
+        Node[] newHeap = new Node[harray.length*2]; //New array double its last size
         int newLenght=length*2;
         
         for (int i=0; i<harray.length; i++) {
@@ -134,7 +134,10 @@ public class Heap {
         return peekNode;
     }
     public int peekMinValue() {
-        int peekValue = harray[0].dist + harray[0].weight;
-        return peekValue;
+        if (harray[0]!=null) {
+            int peekValue = harray[0].dist + harray[0].weight;    
+            return peekValue;
+        }
+        return -1;
     }
 }

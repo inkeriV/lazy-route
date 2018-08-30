@@ -251,16 +251,10 @@ public class Graph {
         return vl;
     }
     
-    public void testaaNode() {
-        Node a = new Node(1,1,1);
-        Node b = new Node(2,1,1);
-        
-        if (a.compareTo(b)==-1) {
-            System.out.println("a oli pienempi");
-        }
-        
-        
-    }
+    public int getStartNodeCoordinateI() { return ai; }
+    public int getStartNodeCoordinateJ() { return aj; }
+    public int getEndNodeCoordinateI() { return li; }
+    public int getEndNodeCoordinateJ() { return lj; }
 
 
     public static void main(String[] args) {
