@@ -5,11 +5,11 @@
  */
 
 import java.util.PriorityQueue;
-import lazyroute.Graph;
-import lazyroute.Heap;
-import lazyroute.Node;
-import lazyroute.Path;
-import static lazyroute.Path.shortestPath;
+import lazyroute.graph.Graph;
+import lazyroute.datastructures.Heap;
+import lazyroute.graph.Node;
+import lazyroute.pathing.Path;
+import static lazyroute.pathing.Path.shortestPath;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

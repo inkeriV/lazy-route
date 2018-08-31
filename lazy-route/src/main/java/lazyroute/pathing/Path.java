@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lazyroute;
+package lazyroute.pathing;
 
 
 import java.util.PriorityQueue;
-import static lazyroute.Stack.createStack;
+import lazyroute.datastructures.Stack;
+import lazyroute.graph.Node;
+import lazyroute.datastructures.Heap;
+import static lazyroute.datastructures.Stack.createStack;
 
 /**
  *
@@ -38,51 +41,31 @@ public class Path {
         totalweight=0;
         nodecount=0;
     }
+
     
-    public void setPath(int[] path) {
-        nodepath=path;
-    }
-    public void setWeightOfPath(int value) {
-        totalweight+=value;
-    }
-    public void setNumberOfNodesInPath() {
-        nodecount++;
-    }
-    public int getNumberOfNodesInPath() {
-        return nodecount;
-    }
-    
-    /* Returns Path-object
+    /* Returns Path-object EI VOI OLLA STATIC KOSKA STACK TULEE TÄYTEEN?
     */
     public static Path shortestPath(Node[] list, Node[][] vl, int a, int l, String alg, int[] nodes) { 
 
-        //PriorityQueue<Node> heap = new PriorityQueue<Node>();
         Heap minheap = new Heap();
         
 
         boolean[] checked = new boolean[list.length];
-        for (int i=0; i<list.length; i++) {
-            checked[i]=false;
-        }
+
         int[] path = new int[list.length];
         
         if (alg == "d" || alg == "D") {
+            
             list[a-1].dist=0;
             minheap.createHeap(list);
             
-            /*for (int i=0; i<list.length; i++) {   
-                heap.add(list[i]);
-            }*/
             dijkstra( vl, a, l, nodes, checked, path, minheap); 
             
         } else {
+            
             list[a-1].weight=0;
             minheap.createHeap(list);
-            
-            /*for (int i=0; i<list.length; i++) {   
-            checked[i]=false;
-            heap.add(list[i]);
-            }*/
+
             astar( vl, a, l, nodes, checked, path, minheap);   
         }
         
@@ -113,6 +96,7 @@ public class Path {
             apu++;
         }
         resultpath.nodepath[resultpath.nodepath.length-1]=l;
+        //stack.emptyStack();
         
         return resultpath;
     }
@@ -122,6 +106,7 @@ public class Path {
         while (checked[l-1]==false) { //while the end node (kept record by its id) has not been dealt with
             
             Node nyk = minheap.popMin(); 
+            
             checked[nyk.id]=true; 
                
             for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
@@ -139,7 +124,7 @@ public class Path {
                                 if (k!=null) {      //that are not null..  
                                     
                                     if (k.id==vierus.id) {
-                                        k.dist = nyk.weight + nodes[vierus.id];
+                                        k.dist = nyk.dist + vierus.weight; //tässä ennen nyk.weight + nodes[vierus.id] >> suurilla verkoilla reitti oli väärä
                                     }
                                 }    
                             }
@@ -149,11 +134,13 @@ public class Path {
                         with the same id, but with changed values
                         */
                         minheap.add(new Node(vierus.id, vierus.weight, vierus.dist));
-                        path[vierus.id]=nyk.id; 
+                        path[vierus.id]=nyk.id;
+                     
                     }
                 }
             }        
         }
+        
     }    
     
     private static void astar( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, Heap minheap) {
@@ -162,7 +149,7 @@ public class Path {
 
             Node nyk = minheap.popMin();
 
-            checked[nyk.id]=true; //null pointer exception -___- keossa jtn väärin, ei pitäis olla null
+            checked[nyk.id]=true; 
 
             for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
                 if (vierus!=null) {         //that are not null
@@ -209,4 +196,14 @@ public class Path {
         result+="The number of nodes in this path is: "+nodecount;
         return result+"\n";
     }
+    
+        
+    public void setPath(int[] path) { nodepath=path; }
+    
+    public void setWeightOfPath(int value) { totalweight+=value; }
+    
+    public void setNumberOfNodesInPath() { nodecount++; }
+    
+    public int getNumberOfNodesInPath() { return nodecount; }
 }
+

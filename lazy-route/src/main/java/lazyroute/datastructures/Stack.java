@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lazyroute;
+package lazyroute.datastructures;
 
 /**
  *
@@ -42,7 +42,7 @@ public class Stack {
     
     public void addToStack(int value) { 
         
-        if (size == stack.length) {
+        if (size >= stack.length) {
             increaseStackSize();
         }
         stack[size]=value;
@@ -61,12 +61,18 @@ public class Stack {
     public void increaseStackSize() { 
         
         int l = stack.length;
-        int[] newStack = new int[l*2];
+        int[] newStack = new int[l+1000]; //java.lang.outofmemoryerror: java heap space :/
+        System.out.println("lisättiin kokoa");
 
         for (int i=0; i<l; i++) { 
             newStack[i]=stack[i];
         }
         stack = newStack;
+    }
+    
+    public void emptyStack() {
+        Stack newStack = createStack();
+        stack = newStack.stack;
     }
     
     

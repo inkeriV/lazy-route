@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lazyroute;
+package lazyroute.graph;
 
 /**
  *
@@ -12,13 +12,8 @@ package lazyroute;
 
 /*
 
-Solmu-olio. Arvoina id, joka on listoissa kyseisen olion indeksi,
-paino, joka Dijkstrassa on solmun oma paino, A-starissa solmujen etäisyys
-alkusolmusta (alustetaan äärettömään) sekä dist: Dijkstrassa etäisyys 
-alkusolmusta (alustetaan äärettömään) ja A-starissa heuristinen etäisyysarvo loppusolmuun.
-
 Node object. Has values id: indeks of this object in graph's list presentations,
-paino: node's weight, dist: distance from end node.
+weight: node's weight, dist: distance from end node.
 
 */
 public class Node implements Comparable<Node> {

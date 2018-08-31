@@ -5,9 +5,8 @@
  */
 
 import java.util.PriorityQueue;
-import junit.framework.Assert;
-import lazyroute.Heap;
-import lazyroute.Node;
+import lazyroute.datastructures.Heap;
+import lazyroute.graph.Node;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
