@@ -49,16 +49,17 @@ public class PathTest {
                                   10,5,10,10,10,
                                   10,10,10,10,10};
         Graph test =  new Graph(nodes, 16, 4, 5, 5, "d");
-        Node[][] vl = new Node[25][];
+        int[][] vl = new int[25][];
         for (int i=0; i<25; i++) {
-            vl[i]=new Node[4];
+            vl[i]=new int[4];
         }
         Node[] list = new Node[25];
-        vl=test.AdjacencyLforD(nodes,vl,5,5,list);
+        int[] dists = new int[25];
+        int[] weights = new int[25];
         
-        PriorityQueue<Node> heap = new PriorityQueue<Node>();
+        vl=test.AdjacencyListDijkstra(nodes,vl,5,5,list,dists);
          
-        obj=shortestPath(list,vl,16,4,"D",nodes);
+        obj=shortestPath(list, vl ,16,4,"D", nodes, weights, dists);
        
         assertEquals(16,obj.nodepath[0]); //first node in path: start node
         assertEquals(17,obj.nodepath[1]); //2nd node in the shortest path 
@@ -77,14 +78,17 @@ public class PathTest {
                                   10,5,10,10,10,
                                   10,10,10,10,10};
         Graph test =  new Graph(nodes, 16, 4, 5, 5, "a");
-        Node[][] vl = new Node[25][];
+        int[][] vl = new int[25][];
         for (int i=0; i<25; i++) {
-            vl[i]=new Node[4];
+            vl[i]=new int[4];
         }
         Node[] list = new Node[25];
-        vl=test.AdjacencyLforA(nodes,vl,5,5,list);
+        int[] dists = new int[25];
+        int[] weights = new int[25];
+        
+        vl=test.AdjacencyListAStar(nodes,vl,5,5,list,weights,dists);
          
-        obj=shortestPath(list,vl,16,4,"A",nodes);
+        obj=shortestPath(list, vl ,16,4,"A", nodes, weights, dists);;
        
         assertEquals(16,obj.nodepath[0]); //first node in path: start node
         assertEquals(17,obj.nodepath[1]); //2nd node in the shortest path 

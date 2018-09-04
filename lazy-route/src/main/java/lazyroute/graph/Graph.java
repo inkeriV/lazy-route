@@ -77,20 +77,36 @@ public class Graph {
         }
         
         //Adjacency list
-        Node[][] vl = new Node[nodes.length][];
+        int[][] vl = new int[nodes.length][];
         for (int i=0; i<nodes.length; i++) {
-            vl[i]=new Node[4];
+            vl[i]=new int[4];
         }
-        //adjacency list for A*
-        if (alg=="a" || alg=="A") {
-            AdjacencyLforA(nodes, vl, m,n, list);
-        }
-        //adjacency list for Dijkstra
-        if (alg == "d" || alg == "D") {
-            AdjacencyLforD(nodes, vl, m,n, list);
-        }
-        path=Path.shortestPath(list, vl, a, l, alg, nodes);
         
+        int[] dists = new int[nodes.length];
+        int[] weights = new int[nodes.length];
+        
+        if (alg=="a" || alg=="A") {
+            for (int i=0; i<nodes.length; i++) {
+                weights[i]=INFINITE_VALUE;
+            }
+            AdjacencyListAStar(nodes, vl, m, n, list, weights, dists);
+        }
+
+        if (alg == "d" || alg == "D") {
+            for (int i=0; i<nodes.length; i++) {
+                dists[i] = INFINITE_VALUE;
+            }
+            
+            AdjacencyListDijkstra(nodes, vl, m, n, list, dists);
+        }
+        
+        path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
+        System.out.println(path.ToString(path));
+        
+    }
+    public static Path getPath(Graph graph) {
+        graph.init();
+        return path;
     }
     
     //heuristic function
@@ -98,158 +114,102 @@ public class Graph {
         int lop = Math.abs(ai-bi)+Math.abs(aj-bj);
         return lop;
     }
-
-    public Node[][] AdjacencyLforD(int[] nodes, Node[][] vl, int m, int n, Node[] list) {
-        
+    public int[][] AdjacencyListAStar(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] weights, int[] dists) {
         int x = 0;
-            list[1]=new Node(1,nodes[1],INFINITE_VALUE);
-            for (int j=0; j<n; j++) {
-                for (int i=0; i<m; i++) {
-
-                if (list[x]==null) { list[x]= new Node(x, nodes[x],INFINITE_VALUE); }
+        
+        list[1]=new Node(1, INFINITE_VALUE, h(1,0,li,lj));
+        weights[1]=INFINITE_VALUE;
+        dists[1]=list[1].dist;
+        
+        for (int j=0; j<n; j++) {
+            for (int i=0; i<m; i++) {
+                if (list[x]==null) { 
                 
-                //---------Corner-nodes---------
-                //left upper corner
-                if (i==0 && j==0) {
-                    vl[0][0]=new Node(1,nodes[1],INFINITE_VALUE); //next node
-                    vl[0][1]=new Node(m,nodes[m],INFINITE_VALUE); //node below
-                    x++;
+                    list[x]=new Node(x, INFINITE_VALUE, h(i,j,li,lj));
+                    weights[x]=INFINITE_VALUE;
+                    dists[x]=list[x].dist;
+                    
                 }
-                //right upper corner
-                if (i==m-1 && j==0) {
-                    vl[i][0]=new Node(m-2,nodes[m-2],INFINITE_VALUE); //previous node
-                    vl[i][1]=new Node((m*2)-1,nodes[m*2-1], INFINITE_VALUE); //node below
-                    x++;
+                //upper node
+                if (isWithinBounds(i,j-1,m,n)) {
+                    vl[x][0]=x-m;
+                    
+                } else { vl[x][0]=-1; }
+                
+                //previous node
+                if (isWithinBounds(i-1,j,m,n)) {
+                    vl[x][1]=x-1;
+                    
+                } else { vl[x][1]=-1; }
+                
+                //next node
+                if (isWithinBounds(i+1,j,m,n)) {
+                    vl[x][2]=x+1;
+                    
+                } else { vl[x][2]=-1; }
+                
+                //bottom node
+                if (isWithinBounds(i,j+1,m,n)) {
+                    vl[x][3]=x+m;
+                    
+                } else { vl[x][3]=-1; }
+                
+                x++;
+            }    
+        }
+        return vl;
+    }
+    public int[][] AdjacencyListDijkstra(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] dists) {
+        int x = 0;
+        int c = 0;
+        
+        list[1]=new Node(1, nodes[1], INFINITE_VALUE);
+        dists[1]=INFINITE_VALUE;
+        
+        for (int j=0; j<n; j++) {
+            for (int i=0; i<m; i++) {
+                if (list[x]==null) { 
+                
+                    list[x]=new Node(x, nodes[x], INFINITE_VALUE);
+                    dists[x]=INFINITE_VALUE;
+                    
                 }
-                //left bottom corner
-                if (x==m*(n-1) && j==n-1) {
-                    vl[x][0]=new Node(m*(n-2),nodes[m*(n-2)], INFINITE_VALUE); //upper node
-                    vl[x][1]=new Node(m*(n-1)+1,nodes[x+1], INFINITE_VALUE); //next node
-                    x++;
-                }
-                //right bottom corner    
-                if (i==m-1 && j==m-1) {
-                    vl[m*m-1][0]=new Node(m*(n-1)-1,nodes[m*(n-1)], INFINITE_VALUE); //upper node
-                    vl[m*m-1][1]=new Node(m*n-2,nodes[m*n-2], INFINITE_VALUE); //previous node
-                    x++;
-                }
-
-                //---------Other-border-nodes---------
-                //upper edge
-                if (j==0 && i!=m-1 && i!=0 ) {
-                    vl[x][0]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous node 
-                    vl[x][1]=new Node(i+m, nodes[i+m], INFINITE_VALUE); //node below
-                    vl[x][2]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next node
-                    x++;  
-                }
-                //left border
-                if (i==0 && j!=0 && j!=m-1) {
-                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
-                    vl[x][1]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next
-                    vl[x][2]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //bottom
-                    x++;
-                }
-                //right border
-                if (i==m-1 && j!=0 && j!=n-1) {
-                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
-                    vl[x][1]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
-                    vl[x][2]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //below
-                    x++;
-                }
-                //foot
-                if (j==n-1 && i!=0 && i!=m-1) { 
-                    vl[x][0]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
-                    vl[x][1]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper
-                    vl[x][2]=new Node(x+1,nodes[x+1], INFINITE_VALUE);//next
-                    x++;
-
-                //---------Middle-nodes---------
-                } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1) {
-                    vl[x][0]=new Node(x-m,nodes[x-m], INFINITE_VALUE); //upper 
-                    vl[x][1]=new Node(x+m,nodes[x+m], INFINITE_VALUE); //bottom
-                    vl[x][2]=new Node(x-1,nodes[x-1], INFINITE_VALUE); //previous
-                    vl[x][3]=new Node(x+1,nodes[x+1], INFINITE_VALUE); //next
-                    x++;
-                }
+                //upper node
+                if (isWithinBounds(i,j-1,m,n)) {
+                    vl[x][0]=x-m;
+                    
+                } else { vl[x][0]=-1; }
+                
+                //previous node
+                if (isWithinBounds(i-1,j,m,n)) {
+                    vl[x][1]=x-1;
+                    
+                } else { vl[x][1]=-1; }
+                
+                //next node
+                if (isWithinBounds(i+1,j,m,n)) {
+                    vl[x][2]=x+1;
+                    
+                } else { vl[x][2]=-1; }
+                
+                //bottom node
+                if (isWithinBounds(i,j+1,m,n)) {
+                    vl[x][3]=x+m;
+                    
+                } else { vl[x][3]=-1; }
+                
+                x++;
+                c++;
             }    
         }
         return vl;
     }
     
-    public Node[][] AdjacencyLforA(int[] nodes, Node[][] vl, int m, int n,  Node[] list) {
-        
-        int x = 0;
-            list[1]=new Node(1,nodes[1],INFINITE_VALUE);
-            for (int j=0; j<n; j++) {
-                for (int i=0; i<m; i++) {
-
-                if (list[x]==null) { list[x]= new Node(x,INFINITE_VALUE,h(i,j,li,lj)); }
-
-                //left upper corner
-                if (i==0 && j==0) {
-                    vl[0][0]=new Node(1,INFINITE_VALUE,h(1,0,li,lj)); //next node
-                    vl[0][1]=new Node(m,INFINITE_VALUE,h(0,1,li,lj)); //node below
-                    x++;
-                }
-                //right upper corner
-                if (i==m-1 && j==0) {
-                    vl[i][0]=new Node(m-2,INFINITE_VALUE,h(m-2,0,li,lj)); //previous node
-                    vl[i][1]=new Node(i+m,INFINITE_VALUE,h(m-1, 1,li,lj)); //node below
-                    x++;
-                }
-                //left bottom corner
-                if (x==m*(n-1) && j==n-1) {
-                    vl[x][0]=new Node(m*(n-2),INFINITE_VALUE,h(0, n-1, li, lj)); //upper node
-                    vl[x][1]=new Node(m*(n-1)+1,INFINITE_VALUE,h(1,j,li,lj)); //next node
-                    x++;
-                }
-                //right bottom corner    
-                if (i==m-1 && j==m-1) {
-                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(0,n-2,li,lj)); //upper node
-                    vl[x][1]=new Node(x-1,INFINITE_VALUE,h(m-2, n-1, li, lj)); //previous node
-                    x++;
-                }
-
-                //---------Other-border-nodes---------
-                //upper edge
-                if (j==0 && i!=m-1 && i!=0 ) {
-                    vl[x][0]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous node 
-                    vl[x][1]=new Node(i+m, INFINITE_VALUE,h(i,j+1,li,lj)); //node below
-                    vl[x][2]=new Node(x+1,INFINITE_VALUE,h(x,j,li,lj)); //next node
-                    x++;  
-                }
-                //left border
-                if (i==0 && j!=0 && j!=m-1) {
-                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
-                    vl[x][1]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj)); //next
-                    vl[x][2]=new Node(x+m,INFINITE_VALUE,h(i,j+1,li,lj)); //bottom
-                    x++;
-                }
-                //right border
-                if (i==m-1 && j!=0 && j!=n-1) {
-                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
-                    vl[x][1]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
-                    vl[x][2]=new Node(x+m-1,INFINITE_VALUE,h(i,j+1,li,lj)); //below
-                    x++;
-                }
-                //foot
-                if (j==n-1 && i!=0 && i!=m-1) { 
-                    vl[x][0]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
-                    vl[x][1]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper
-                    vl[x][2]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj));//next
-                    x++;
-
-                //---------Middle-nodes---------
-                } else if (j!=0 && j!=n-1 && i!=0 && i!=m-1) {
-                    vl[x][0]=new Node(x-m,INFINITE_VALUE,h(i,j-1,li,lj)); //upper 
-                    vl[x][1]=new Node(x+m,INFINITE_VALUE,h(i,j+1,li,lj)); //bottom
-                    vl[x][2]=new Node(x-1,INFINITE_VALUE,h(i-1,j,li,lj)); //previous
-                    vl[x][3]=new Node(x+1,INFINITE_VALUE,h(i+1,j,li,lj)); //next
-                    x++;
-                }
-            }    
+    private boolean isWithinBounds(int i, int j, int m, int n) {
+        if (i>=0 && i<m && j>=0 && j<n) {
+            return true;
         }
-        return vl;
+        return false;
     }
     
     public int getStartNodeCoordinateI() { return ai; }

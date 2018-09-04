@@ -24,11 +24,11 @@ Path class has a Path-object which includes:
     int - the weight of the path (start node weight not included)
     int - the number of nodes in the shortest path including start and end nodes
     
-    shortestPath method returns a Path object to the very first method called. ShortestPath method calls either
-    Dijkstra or AStar.
+shortestPath method returns a Path object to the very first method called. ShortestPath method calls either
+Dijkstra or AStar.
 
-    Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
-    shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
+Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
+shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
 */
 public class Path {
     
@@ -45,7 +45,7 @@ public class Path {
     
     /* Returns Path-object EI VOI OLLA STATIC KOSKA STACK TULEE TÄYTEEN?
     */
-    public static Path shortestPath(Node[] list, Node[][] vl, int a, int l, String alg, int[] nodes) { 
+    public static Path shortestPath(Node[] list, int[][] vl, int a, int l, String alg, int[] nodes, int[] weights, int[] dists) { 
 
         Heap minheap = new Heap();
         
@@ -57,16 +57,20 @@ public class Path {
         if (alg == "d" || alg == "D") {
             
             list[a-1].dist=0;
+            dists[a-1]=0;
             minheap.createHeap(list);
             
-            dijkstra( vl, a, l, nodes, checked, path, minheap); 
+            //dijkstra( vl, a, l, nodes, checked, path, minheap);
+            pathingDijkstra(vl, a, l, nodes, dists, checked, path, minheap);
             
         } else {
             
             list[a-1].weight=0;
+            weights[a-1]=0;
             minheap.createHeap(list);
 
-            astar( vl, a, l, nodes, checked, path, minheap);   
+            //astar( vl, a, l, nodes, checked, path, minheap);   
+            pathingAStar(vl, a, l, nodes, weights, dists, checked, path, minheap);
         }
         
         //new Path object, the one we are returning
@@ -96,89 +100,56 @@ public class Path {
             apu++;
         }
         resultpath.nodepath[resultpath.nodepath.length-1]=l;
-        //stack.emptyStack();
         
         return resultpath;
     }
     
-    private static void dijkstra( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, Heap minheap) {
-       
-        while (checked[l-1]==false) { //while the end node (kept record by its id) has not been dealt with
+    private static void pathingDijkstra( int[][] vl, int a, int l, int[] nodes, int[] dists, boolean[] checked, int[] path, Heap minheap) {
+        
+        while (checked[l-1] == false) {
             
-            Node nyk = minheap.popMin(); 
+            Node nyk = minheap.popMin();
             
-            checked[nyk.id]=true; 
-               
-            for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
-                if (vierus!=null) {         //that are not null
+            checked[nyk.id]=true;
+            
+            for (int vierus: vl[nyk.id]) {
+                
+                if (vierus!=-1) {
                     
-                    if (nyk.dist+vierus.weight < vierus.dist) {
+                    if (dists[nyk.id] + nodes[vierus] < dists[vierus]) {
+                        System.out.println("dists[nyk.id]= "+dists[nyk.id]);
                         
-                        /*
-                        if node's value is changed, we have to change its value everywhere it appears
-                        (everytime it's another node's neighbour)
-                        */
-                        for (int i=0; i<nodes.length; i++) {   
-
-                            for (Node k: vl[i]) {   //for neighbour nodes..
-                                if (k!=null) {      //that are not null..  
-                                    
-                                    if (k.id==vierus.id) {
-                                        k.dist = nyk.dist + vierus.weight; //tässä ennen nyk.weight + nodes[vierus.id] >> suurilla verkoilla reitti oli väärä
-                                    }
-                                }    
-                            }
-                        }    
-                        /* 
-                        since nodes already put in the heap cannot be changed, we have to create a new node
-                        with the same id, but with changed values
-                        */
-                        minheap.add(new Node(vierus.id, vierus.weight, vierus.dist));
-                        path[vierus.id]=nyk.id;
-                     
+                        dists[vierus]=dists[nyk.id]+nodes[vierus];
+                        minheap.add(new Node(vierus, nodes[vierus], dists[vierus]));
+                        path[vierus]=nyk.id;
                     }
                 }
-            }        
+            }
         }
-        
-    }    
+        for (int i=0; i<path.length; i++) {
+            System.out.println(path[i]);
+        }
+    }
     
-    private static void astar( Node[][] vl, int a, int l, int[] nodes, boolean[] checked, int[] path, Heap minheap) {
-
-        while (checked[l-1]==false) { //while the end node (kept record by its id) has not been dealt with
-
+    private static void pathingAStar( int[][] vl, int a, int l, int[] nodes,int[] weights, int[] dists, boolean[] checked, int[] path, Heap minheap) {
+        
+        while (checked[l-1] == false) {
+            
             Node nyk = minheap.popMin();
-
-            checked[nyk.id]=true; 
-
-            for (Node vierus: vl[nyk.id]) { //for neighbour nodes..
-                if (vierus!=null) {         //that are not null
+            
+            checked[nyk.id]=true;
+            
+            for (int vierus: vl[nyk.id]) {
+                
+                if (vierus!=-1) {
                     
-                    if (vierus.weight > nyk.weight + nodes[vierus.id]) {
+                    if (weights[vierus] > weights[nyk.id] + nodes[vierus]) {
                         
-                        /*
-                        if node's value is changed, we have to change its value everywhere it appears
-                        (everytime it's another node's neighbour)
-                        */
-                        for (int i=0; i<nodes.length; i++) {
-                            
-                            for (Node k: vl[i]) {   //for neighbour nodes..
-                                if (k!=null) {      //that are not null
-                                    
-                                    if (k.id==vierus.id) {
-                                        k.weight = nyk.weight + nodes[vierus.id];
-                                    }
-                                }    
-                            }
-                        }
-                        /* 
-                        since nodes already put in the heap cannot be changed, we have to create a new node
-                        with the same id, but with changed values
-                        */    
-                        minheap.add(new Node(vierus.id, vierus.weight, vierus.dist));
-                        path[vierus.id] = nyk.id;
+                        weights[vierus]=weights[nyk.id]+nodes[vierus];
+                        minheap.add(new Node(vierus, weights[vierus], dists[vierus]));
+                        path[vierus]=nyk.id;
                     }
-                }    
+                }
             }
         }
     }

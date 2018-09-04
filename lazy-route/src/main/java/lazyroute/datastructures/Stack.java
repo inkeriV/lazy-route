@@ -61,20 +61,13 @@ public class Stack {
     public void increaseStackSize() { 
         
         int l = stack.length;
-        int[] newStack = new int[l+1000]; //java.lang.outofmemoryerror: java heap space :/
-        System.out.println("lisättiin kokoa");
+        int[] newStack = new int[l*2];
 
         for (int i=0; i<l; i++) { 
             newStack[i]=stack[i];
         }
         stack = newStack;
     }
-    
-    public void emptyStack() {
-        Stack newStack = createStack();
-        stack = newStack.stack;
-    }
-    
     
     public boolean isEmpty() {
         

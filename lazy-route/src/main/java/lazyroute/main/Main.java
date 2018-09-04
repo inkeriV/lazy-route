@@ -5,7 +5,10 @@
  */
 package lazyroute.main;
 
+import lazyroute.graph.Graph;
+import static lazyroute.graph.Graph.getPath;
 import static lazyroute.graph.Graph.testPerformance;
+import lazyroute.pathing.Path;
 
 /**
  *
@@ -13,23 +16,25 @@ import static lazyroute.graph.Graph.testPerformance;
  */
 public class Main {
     
+    
     public static void main(String[] args) {
         
         //running in NetBeans
-        /*Graph test = new Graph(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "d");
-        test.init();
-        System.out.println(path.ToString(path));
+        Graph test = new Graph(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
+        
+        Path p = getPath(test);
+        //System.out.println(p.ToString(p));
         
         int[] nodes = new int[]{  10,10,10,10,10,
                                   10,10,5,5,10,
                                   10,5,5,10,10,
                                   10,5,10,10,10,
                                   10,10,10,10,10};
-        Graph test2 =  new Graph(nodes, 16, 4, 5, 5, "d");
-        test2.init();
-        System.out.println(path.ToString(path));*/
+        Graph test2 =  new Graph(nodes, 16, 4, 5, 5, "a");
+        Path p2 = getPath(test2);
+        //System.out.println(p2.ToString(p2));
         
-        testPerformance(1);
+        //testPerformance(1);
         
          /*
         Graph koe=new Graph(new int[]{1,2,2,2,2,2,9,9,9,7,

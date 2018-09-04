@@ -7,6 +7,7 @@
 import java.util.ArrayList;
 import lazyroute.graph.Node;
 import lazyroute.graph.Graph;
+import static lazyroute.graph.Graph.createRandomGraph;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,34 +36,40 @@ public class GraphTest {
         assertEquals(7,test.h(1,2,7,3));
     }
     
-    @Test
+    @Test  
     public void doesAdjacencyListGetInitializedCorrectlyforDijkstra() {
-        Node[][] nodes =new Node[16][4];
+        int[][] vll =new int[16][4];
         int[] weights = new int[]{4,3,2,1,1,2,3,4,3,4,2,1,1,4,2,3};
         Node[] list1 = new Node[weights.length];
-        Node[][] tulos = test.AdjacencyLforD(weights, nodes, 4,4, list1);
+        int[] dists = new int[weights.length];
+        int[][] tulos = test.AdjacencyListDijkstra(weights,vll,4,4,list1,dists);
+        
         int i=0;
-        for (Node kaikki:tulos[i]) {
-            if (kaikki!=null) {
-                assertEquals(1000000000,kaikki.dist);
-                assertEquals(kaikki.weight, weights[kaikki.id]);
-                i++;
-            }    
+        for (int kaikki:tulos[i]) {
+            if (kaikki != -1) {
+                assertEquals(1000000000,dists[kaikki]);
+            }
+            i++;
         }
     }
     
     @Test
     public void doesAdjacencyListGetInitializedCorrectlyforAStar() {
-        Node[][] nodes =new Node[16][4];
+        int[][] vll =new int[16][4];
         int[] weights = new int[]{4,3,2,1,1,2,3,4,3,4,2,1,1,4,2,3};
         Node[] list1 = new Node[weights.length];
-        Node[][] tulos = test.AdjacencyLforA(weights, nodes, 4,4, list1);
+        int[] dists = new int[weights.length];
+        int[] painot = new int[weights.length];
+        
+        int[][] tulos = test.AdjacencyListAStar(weights,vll,4,4,list1,painot,dists);
+        
         int i=0;
-        for (Node kaikki:tulos[i]) {
-            if (kaikki!=null) {
-                assertEquals(1000000000,kaikki.weight);
-                i++;
-            }    
+        for (int kaikki:tulos[i]) {
+            if (kaikki != -1) {
+                assertEquals(list1[kaikki].weight, painot[kaikki]);
+                assertEquals(list1[kaikki].dist, dists[kaikki]);
+            }
+            i++;
         }
     }
     
@@ -80,6 +87,19 @@ public class GraphTest {
         
         assertEquals(3, g.getEndNodeCoordinateI());
         assertEquals(4, g.getEndNodeCoordinateJ());    
+    }
+    
+    private boolean lessThanHundred(int i) {
+        if (i<100) { return true ; }
+        return false;
+    }
+    @Test
+    public void isRandomGraphCorrect() {
+        int[] random = createRandomGraph();
+        
+        for (int i=0; i<random.length; i++) {
+            assertEquals(true, lessThanHundred(random[i]));
+        }
     }
     
 }
