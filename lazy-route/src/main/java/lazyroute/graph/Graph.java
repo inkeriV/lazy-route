@@ -101,7 +101,7 @@ public class Graph {
         }
         
         path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
-        System.out.println(path.ToString(path));
+        System.out.println(path.ToString(path)); //KORJAA TÄMÄ
         
     }
     public static Path getPath(Graph graph) {
@@ -205,6 +205,10 @@ public class Graph {
         return vl;
     }
     
+    
+    //return true if node-coordinates are within the graph
+    //used for checking what neighbour nodes a node has (previous,next,upper,bottom)
+    //(big thanks to my code reviewer)
     private boolean isWithinBounds(int i, int j, int m, int n) {
         if (i>=0 && i<m && j>=0 && j<n) {
             return true;
@@ -220,38 +224,8 @@ public class Graph {
     
     
     public static void testPerformance(int n) { 
-        for (int i=1; i<=n; i++) {
-            int[] graph = createRandomGraph();
-            
-            Graph a = new Graph(graph, 1, 10000, 100, 100, "a");
-            Graph d = new Graph(graph, 1, 10000, 100, 100, "d");
-
-            long beginningTimeAStar = System.currentTimeMillis();
-
-            a.init();
-
-            long endingTimeAStar = System.currentTimeMillis();
-            System.out.println("Laskenta A* kesti "+ (endingTimeAStar - beginningTimeAStar) + " ms.");
-            //System.out.println(path.ToString(path));
-
-            long beginningTimeDijkstra = System.currentTimeMillis();
-
-            d.init();
-
-            long endingTimeDijkstra = System.currentTimeMillis();
-            System.out.println("Laskenta Dijkstralla kesti " + (endingTimeDijkstra - beginningTimeDijkstra) + " ms.");
-            //System.out.println(path.ToString(path));
-        }
+        
     }
     
-    public static int[] createRandomGraph() {
-        
-        int[] graph = new int[10000];
-        
-        for (int i=0; i<10000; i++) {
-            graph[i]=(int)Math.floor(Math.random()*100);
-        }
-        
-        return graph;
-    }
+
 }

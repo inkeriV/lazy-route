@@ -4,14 +4,9 @@
  * and open the template in the editor.
  */
 
-import java.util.ArrayList;
 import lazyroute.graph.Node;
 import lazyroute.graph.Graph;
-import static lazyroute.graph.Graph.createRandomGraph;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -88,18 +83,5 @@ public class GraphTest {
         assertEquals(3, g.getEndNodeCoordinateI());
         assertEquals(4, g.getEndNodeCoordinateJ());    
     }
-    
-    private boolean lessThanHundred(int i) {
-        if (i<100) { return true ; }
-        return false;
-    }
-    @Test
-    public void isRandomGraphCorrect() {
-        int[] random = createRandomGraph();
         
-        for (int i=0; i<random.length; i++) {
-            assertEquals(true, lessThanHundred(random[i]));
-        }
-    }
-    
 }

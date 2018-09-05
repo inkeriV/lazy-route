@@ -16,25 +16,90 @@ import lazyroute.pathing.Path;
  */
 public class Main {
     
+    public String toString(int[][] graph) {
+
+       String result="";
+        
+        return result;
+    }
+    
+    private static String multiplyString(String mult, int val) {
+        String ret="";
+        for (int i=0; i<val; i++) {
+            ret+=mult;
+        }
+        return ret;
+    }
+    
+    public static String toString2(int[] graph, int m, int n) {
+        String result = "";
+        String middle = " - ";
+        String between = "|";
+        String empty = " ";
+        
+        //-------------FIND-LONGEST-NUMBER-------------------
+        int max = 0;
+        
+        for (int a=0; a<graph.length; a++) {
+            if (max < Integer.toString(graph[a]).length()) {
+                max = Integer.toString(graph[a]).length();
+            }
+        }
+        //---------------------------------------------------
+        
+        //goes through the graph
+        int index=0;
+        //---------------------------------------------------
+        String middleRow="";
+        for (int b=0; b<m-1; b++) {
+            middleRow+=between+multiplyString(empty,max+2);
+        }
+        middleRow+=between;
+        //---------------------------------------------------
+        int rowLength = middleRow.length();
+        //---------------------------------------------------
+        
+        
+        for (int j=0; j<n; j++) {
+            result+="\n";
+            for (int i=0; i<m; i++) {
+                //--------------TÄÄLLÄ ONGELMIA-:(--------------------
+                if (i==m-1) {
+                    result+=multiplyString(empty,max)+Integer.toString(graph[index]);
+                    index++; 
+                  
+                } else {
+                    result+=Integer.toString(graph[index])+middle;
+                    index++; 
+                }
+                //----------------------------------------------------------
+            }
+            result+="\n"+middleRow; //pystyviivoja niin monta kuin m, väliin niin monta kuin max +2 (molemmille puolille)
+        } 
+
+        return result;
+    }
     
     public static void main(String[] args) {
         
         //running in NetBeans
-        Graph test = new Graph(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
+        //Graph test = new Graph(new int[]{1,3,3,4,4,4,5,5,5,2,2,1,4,2,5,3}, 1, 12, 4, 4, "a");
         
-        Path p = getPath(test);
+        //Path p = getPath(test);
         //System.out.println(p.ToString(p));
         
-        int[] nodes = new int[]{  10,10,10,10,10,
+        /*int[] nodes = new int[]{  10,10,10,10,10,
                                   10,10,5,5,10,
                                   10,5,5,10,10,
                                   10,5,10,10,10,
                                   10,10,10,10,10};
-        Graph test2 =  new Graph(nodes, 16, 4, 5, 5, "a");
-        Path p2 = getPath(test2);
+        
+        System.out.println(toString2(nodes,5,5));*/
+        /*Graph test2 =  new Graph(nodes, 16, 4, 5, 5, "a");
+        Path p2 = getPath(test2);*/
         //System.out.println(p2.ToString(p2));
         
-        //testPerformance(1);
+        testPerformance(21);
         
          /*
         Graph koe=new Graph(new int[]{1,2,2,2,2,2,9,9,9,7,

@@ -83,6 +83,7 @@ public class Path {
 
         
         while (u != a-1) {
+
             stack.addToStack(u);
             u = path[u];
             resultpath.setNumberOfNodesInPath();
@@ -94,6 +95,7 @@ public class Path {
         resultpath.nodepath[0]=a;
         int apu=1;
         while (!stack.isEmpty()) {
+
             u = stack.popStack();
             resultpath.nodepath[apu]=u+1;
             
@@ -117,7 +119,6 @@ public class Path {
                 if (vierus!=-1) {
                     
                     if (dists[nyk.id] + nodes[vierus] < dists[vierus]) {
-                        System.out.println("dists[nyk.id]= "+dists[nyk.id]);
                         
                         dists[vierus]=dists[nyk.id]+nodes[vierus];
                         minheap.add(new Node(vierus, nodes[vierus], dists[vierus]));
@@ -125,9 +126,6 @@ public class Path {
                     }
                 }
             }
-        }
-        for (int i=0; i<path.length; i++) {
-            System.out.println(path[i]);
         }
     }
     
@@ -154,6 +152,16 @@ public class Path {
         }
     }
     
+ 
+    public void setPath(int[] path) { nodepath=path; }
+    
+    public void setWeightOfPath(int value) { totalweight+=value; }
+    
+    public void setNumberOfNodesInPath() { nodecount++; }
+    
+    public int getNumberOfNodesInPath() { return nodecount; }
+    
+    
     public String ToString(Path obj) {
         String result="Shortest path between given start node and end node:\n";
         for (int i=0; i<nodepath.length; i++) {
@@ -165,16 +173,8 @@ public class Path {
         }
         result+="The weight of this path is: "+totalweight+"\n";
         result+="The number of nodes in this path is: "+nodecount;
+        
         return result+"\n";
     }
-    
-        
-    public void setPath(int[] path) { nodepath=path; }
-    
-    public void setWeightOfPath(int value) { totalweight+=value; }
-    
-    public void setNumberOfNodesInPath() { nodecount++; }
-    
-    public int getNumberOfNodesInPath() { return nodecount; }
 }
 
