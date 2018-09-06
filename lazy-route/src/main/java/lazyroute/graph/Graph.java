@@ -27,7 +27,7 @@ public class Graph {
     //infinite value
     private static final int INFINITE_VALUE=1000000000;//Integer.MAX_VALUE;
     
-    private int[] nodes;
+    public int[] nodes;
     private int a;
     private int l;
     private int m;
@@ -49,6 +49,7 @@ public class Graph {
   
     //creating graph presentations
     public Path init() {
+
         Node[] list = new Node[nodes.length] ;
         //list = new Node[nodes.length];
         int[][] graph = new int[m][n];
@@ -85,14 +86,16 @@ public class Graph {
         int[] dists = new int[nodes.length];
         int[] weights = new int[nodes.length];
         
-        if (alg=="a" || alg=="A") {
+        if (alg.equalsIgnoreCase("a")) {
+           
             for (int i=0; i<nodes.length; i++) {
                 weights[i]=INFINITE_VALUE;
             }
             AdjacencyListAStar(nodes, vl, m, n, list, weights, dists);
         }
-
-        if (alg == "d" || alg == "D") {
+        
+        if (alg.equalsIgnoreCase("d")) { //ONGELMA komentoriviltä TÄÄLLÄ
+            
             for (int i=0; i<nodes.length; i++) {
                 dists[i] = INFINITE_VALUE;
             }
@@ -161,6 +164,7 @@ public class Graph {
         return vl;
     }
     public int[][] AdjacencyListDijkstra(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] dists) {
+     
         int x = 0;
         
         list[1]=new Node(1, nodes[1], INFINITE_VALUE);

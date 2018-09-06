@@ -6,7 +6,6 @@
 package lazyroute.pathing;
 
 
-import java.util.PriorityQueue;
 import lazyroute.datastructures.Stack;
 import lazyroute.graph.Node;
 import lazyroute.datastructures.Heap;
@@ -43,10 +42,9 @@ public class Path {
     }
 
     
-    /* Returns Path-object EI VOI OLLA STATIC KOSKA STACK TULEE TÄYTEEN?
-    */
+   
     public static Path shortestPath(Node[] list, int[][] vl, int a, int l, String alg, int[] nodes, int[] weights, int[] dists) { 
-
+        
         Heap minheap = new Heap();
         
 
@@ -54,7 +52,7 @@ public class Path {
 
         int[] path = new int[list.length];
         
-        if (alg == "d" || alg == "D") {
+        if (alg.equalsIgnoreCase("d") ) {
             
             list[a-1].dist=0;
             dists[a-1]=0;
@@ -62,7 +60,8 @@ public class Path {
             
             pathingDijkstra(vl, a, l, nodes, dists, checked, path, minheap);
             
-        } else {
+        }
+        if (alg.equalsIgnoreCase("a") ) {
             
             list[a-1].weight=0;
             weights[a-1]=0;
@@ -160,7 +159,7 @@ public class Path {
     public int getNumberOfNodesInPath() { return nodecount; }
     
     
-    public String ToString(Path obj) {
+    public String ToString() {
         String result="\nShortest path between given start node and end node:\n";
         for (int i=0; i<nodepath.length; i++) {
             if (i==nodepath.length-1) {
