@@ -25,9 +25,10 @@ public class PerformanceTesting {
     }
     
     public static void main(String[] args) {
-        
+
         String input = args[0];
         int n = Integer.parseInt(input);
+
         
         for (int i=1; i<=n; i++) {
             int[] graph = createRandomGraph();

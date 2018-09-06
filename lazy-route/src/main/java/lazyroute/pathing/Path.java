@@ -60,7 +60,6 @@ public class Path {
             dists[a-1]=0;
             minheap.createHeap(list);
             
-            //dijkstra( vl, a, l, nodes, checked, path, minheap);
             pathingDijkstra(vl, a, l, nodes, dists, checked, path, minheap);
             
         } else {
@@ -69,7 +68,6 @@ public class Path {
             weights[a-1]=0;
             minheap.createHeap(list);
 
-            //astar( vl, a, l, nodes, checked, path, minheap);   
             pathingAStar(vl, a, l, nodes, weights, dists, checked, path, minheap);
         }
         
@@ -163,7 +161,7 @@ public class Path {
     
     
     public String ToString(Path obj) {
-        String result="Shortest path between given start node and end node:\n";
+        String result="\nShortest path between given start node and end node:\n";
         for (int i=0; i<nodepath.length; i++) {
             if (i==nodepath.length-1) {
                 result+=nodepath[i]+"\n";

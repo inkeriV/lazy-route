@@ -34,7 +34,7 @@ public class Graph {
     private int n;
     private String alg;
     
-    private static Path path;
+    //private static Path path;
 
     
     public Graph (int[] s, int alku, int loppu, int lev, int pit, String al) {
@@ -48,7 +48,7 @@ public class Graph {
      
   
     //creating graph presentations
-    public void init() {
+    public Path init() {
         Node[] list = new Node[nodes.length] ;
         //list = new Node[nodes.length];
         int[][] graph = new int[m][n];
@@ -100,20 +100,21 @@ public class Graph {
             AdjacencyListDijkstra(nodes, vl, m, n, list, dists);
         }
         
-        path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
-        System.out.println(path.ToString(path)); //KORJAA TÄMÄ
+        Path path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
+        return path;
+        //System.out.println(path.ToString(path)); //KORJAA TÄMÄ
         
     }
-    public static Path getPath(Graph graph) {
-        graph.init();
-        return path;
-    }
+    
+    
     
     //heuristic function
     public int h( int ai, int aj, int bi, int bj) { 
         int lop = Math.abs(ai-bi)+Math.abs(aj-bj);
         return lop;
     }
+    
+    
     public int[][] AdjacencyListAStar(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] weights, int[] dists) {
         int x = 0;
         
@@ -161,7 +162,6 @@ public class Graph {
     }
     public int[][] AdjacencyListDijkstra(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] dists) {
         int x = 0;
-        int c = 0;
         
         list[1]=new Node(1, nodes[1], INFINITE_VALUE);
         dists[1]=INFINITE_VALUE;
@@ -199,7 +199,6 @@ public class Graph {
                 } else { vl[x][3]=-1; }
                 
                 x++;
-                c++;
             }    
         }
         return vl;
@@ -208,7 +207,7 @@ public class Graph {
     
     //return true if node-coordinates are within the graph
     //used for checking what neighbour nodes a node has (previous,next,upper,bottom)
-    //(big thanks to my code reviewer)
+    //(thanks to my code reviewer)
     private boolean isWithinBounds(int i, int j, int m, int n) {
         if (i>=0 && i<m && j>=0 && j<n) {
             return true;
@@ -219,13 +218,6 @@ public class Graph {
     public int getStartNodeCoordinateI() { return ai; }
     public int getStartNodeCoordinateJ() { return aj; }
     public int getEndNodeCoordinateI() { return li; }
-    public int getEndNodeCoordinateJ() { return lj; }
-    
-    
-    
-    public static void testPerformance(int n) { 
-        
-    }
-    
+    public int getEndNodeCoordinateJ() { return lj; }    
 
 }

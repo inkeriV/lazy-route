@@ -6,8 +6,6 @@
 package lazyroute.main;
 
 import lazyroute.graph.Graph;
-import static lazyroute.graph.Graph.getPath;
-import static lazyroute.graph.Graph.testPerformance;
 import lazyroute.pathing.Path;
 
 /**
@@ -99,9 +97,9 @@ public class Main {
         Path p2 = getPath(test2);*/
         //System.out.println(p2.ToString(p2));
         
-        testPerformance(21);
+
         
-         /*
+        
         Graph koe=new Graph(new int[]{1,2,2,2,2,2,9,9,9,7,
                                         3,3,3,4,3,4,3,2,1,2,
                                         5,5,5,5,6,6,6,7,3,1,
@@ -111,16 +109,22 @@ public class Main {
                                         3,3,3,4,3,4,3,2,1,2,
                                         5,5,5,5,6,6,6,7,3,1,
                                         3,4,4,4,4,4,4,4,4,2,
-                                        2,1,1,7,7,7,7,3,3,2 }, 1, 99, 10,10,"a");
-        koe.init();
+                                        2,1,1,7,7,7,7,3,3,2 }, 1, 99, 10,10,"d");
+        Path result = koe.init();
+        System.out.println(result.ToString(result)); 
+        
+        
+        /*
+        Graph sama = new Graph(new int[]{1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1}
+                                ,1,35,6,6,"d");
+        Path result = sama.init();
+        System.out.println(result.ToString(result));
         */
+        
         //------------------------------------------------------------
         //running in terminal
-        
-        
         //command: 
-        //mvn compile exec:java -Dexec.mainClass=lazyroute.Verkko 
-        //                -Dexec.args="1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1, 1 35 6 6 d"
+        //mvn compile exec:java -Dexec.mainClass=lazyroute.main.Main -Dexec.args="1,1,1,1,2,3,2,1,2,3,1,2,3,4,2,4,1,1,1,1,1,2,1,2,1,4,2,4,2,4,2,1,2,2,1,1, 1 35 6 6 d"
         
         /*
         String patki = args[0];
@@ -142,10 +146,9 @@ public class Main {
         int n = Integer.parseInt(args[4]);
         String algoritmi = args[5];
 
-        Verkko koe=new Verkko(lista, alkusolmu, loppusolmu, m, n, algoritmi);
-        koe.alustus();
-        */
-        
+        Graph koe=new Graph(lista, alkusolmu, loppusolmu, m, n, algoritmi);
+        Path result = koe.init();
+        System.out.println(result.ToString(result));;
+        */   
     }
-    
 }
