@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package lazyroute.pathing;
-
-
 import lazyroute.datastructures.Stack;
 import lazyroute.graph.Node;
 import lazyroute.datastructures.Heap;
@@ -17,7 +13,6 @@ import static lazyroute.datastructures.Stack.createStack;
  */
 
 /*
-
 Path class has a Path-object which includes:
     int array - has the node id's of the nodes in the shortest path from start node to end node
     int - the weight of the path (start node weight not included)
@@ -29,6 +24,7 @@ Dijkstra or AStar.
 Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
 shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
 */
+
 public class Path {
     
     public int[] nodepath;
@@ -41,7 +37,6 @@ public class Path {
         nodecount=0;
     }
 
-    
    
     public static Path shortestPath(Node[] list, int[][] vl, int a, int l, String alg, int[] nodes, int[] weights, int[] dists) { 
         
@@ -58,7 +53,7 @@ public class Path {
             dists[a-1]=0;
             minheap.createHeap(list);
             
-            pathingDijkstra(vl, a, l, nodes, dists, checked, path, minheap);
+            pathingDijkstra(vl, l, nodes, dists, checked, path, minheap);
             
         }
         if (alg.equalsIgnoreCase("a") ) {
@@ -67,7 +62,7 @@ public class Path {
             weights[a-1]=0;
             minheap.createHeap(list);
 
-            pathingAStar(vl, a, l, nodes, weights, dists, checked, path, minheap);
+            pathingAStar(vl, l, nodes, weights, dists, checked, path, minheap);
         }
         
         //new Path object, the one we are returning
@@ -103,7 +98,7 @@ public class Path {
         return resultpath;
     }
     
-    private static void pathingDijkstra( int[][] vl, int a, int l, int[] nodes, int[] dists, boolean[] checked, int[] path, Heap minheap) {
+    private static void pathingDijkstra( int[][] vl, int l, int[] nodes, int[] dists, boolean[] checked, int[] path, Heap minheap) {
         
         while (checked[l-1] == false) {
             
@@ -126,7 +121,8 @@ public class Path {
         }
     }
     
-    private static void pathingAStar( int[][] vl, int a, int l, int[] nodes,int[] weights, int[] dists, boolean[] checked, int[] path, Heap minheap) {
+    
+    private static void pathingAStar( int[][] vl, int l, int[] nodes,int[] weights, int[] dists, boolean[] checked, int[] path, Heap minheap) {
         
         while (checked[l-1] == false) {
             

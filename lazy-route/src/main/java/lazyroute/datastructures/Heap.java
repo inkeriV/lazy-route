@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package lazyroute.datastructures;
 
+
+
+package lazyroute.datastructures;
 import lazyroute.graph.Node;
 
 
@@ -13,8 +10,10 @@ import lazyroute.graph.Node;
  * @author inkeriv
  */
 
-/*  Minheap for arranging nodes according to their dist+weigth. 
-    Heap has a Node array and integer values for the length of the array and the number of nodes in the array. */
+/*  
+Minheap for arranging nodes according to their dist+weigth. 
+Heap has a Node array and integer values for the length of the array and the number of nodes in the array. 
+*/
 
 public class Heap { 
 

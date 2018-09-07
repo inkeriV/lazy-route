@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package lazyroute.graph;
 
-import lazyroute.graph.Node;
+
+
+package lazyroute.graph;
 import lazyroute.pathing.Path;
 
 /**
@@ -25,19 +21,18 @@ public class Graph {
     private int lj;
     
     //infinite value
-    private static final int INFINITE_VALUE=1000000000;//Integer.MAX_VALUE;
+    private static final int INFINITE_VALUE=1000000000;
     
     public int[] nodes;
-    private int a;
-    private int l;
-    private int m;
-    private int n;
-    private String alg;
-    
-    //private static Path path;
+    private final int a; //ordinal of the start node in "nodes"-array
+    private final int l; //ordinal of the end node in "nodes"-array
+    private final int m; //graph width
+    private final int n; //graph length
+    private final String alg; //chosen algorithm, d or a
 
     
     public Graph (int[] s, int alku, int loppu, int lev, int pit, String al) {
+        
         nodes = s;
         a = alku;
         l = loppu;
@@ -46,19 +41,20 @@ public class Graph {
         alg = al;
     }
      
-  
+    
     //creating graph presentations
     public String init() {
 
         Node[] list = new Node[nodes.length] ;
-        //list = new Node[nodes.length];
         int[][] graph = new int[m][n];
         
         
         //Node-type list of nodes
         int value=0;
         for (int j=0; j<m; j++) {
+            
             for (int i=0; i<n; i++) {
+                
                 
                 //start node coordinates
                 if (value==a-1) {
@@ -79,7 +75,9 @@ public class Graph {
         
         //Adjacency list
         int[][] vl = new int[nodes.length][];
+        
         for (int i=0; i<nodes.length; i++) {
+            
             vl[i]=new int[4];
         }
         
@@ -89,14 +87,16 @@ public class Graph {
         if (alg.equalsIgnoreCase("a")) {
            
             for (int i=0; i<nodes.length; i++) {
+                
                 weights[i]=INFINITE_VALUE;
             }
             AdjacencyListAStar(nodes, vl, m, n, list, weights, dists);
         }
         
-        if (alg.equalsIgnoreCase("d")) { //ONGELMA komentoriviltä TÄÄLLÄ
+        if (alg.equalsIgnoreCase("d")) { 
             
             for (int i=0; i<nodes.length; i++) {
+                
                 dists[i] = INFINITE_VALUE;
             }
             
@@ -105,10 +105,8 @@ public class Graph {
         
         Path path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
         String string = path.ToString(a,l,alg);
-        return string;
-        //System.out.println(path.ToString(path)); //KORJAA TÄMÄ    
+        return string;   
     }
-    
     
     
     //heuristic function
@@ -163,6 +161,8 @@ public class Graph {
         }
         return vl;
     }
+    
+    
     public int[][] AdjacencyListDijkstra(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] dists) {
      
         int x = 0;

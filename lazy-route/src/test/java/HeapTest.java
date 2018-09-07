@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 import java.util.PriorityQueue;
 import lazyroute.datastructures.Heap;
 import lazyroute.graph.Node;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,6 +11,7 @@ import static org.junit.Assert.*;
  *
  * @author inkeriv
  */
+
 public class HeapTest {
     
     Heap heap;
@@ -43,7 +37,7 @@ public class HeapTest {
             new Node(28,1,0), new Node(29,1,6), new Node(30,2,2),
         };
         
-        PriorityQueue<Node> stack = new PriorityQueue<Node>();
+        PriorityQueue<Node> stack = new PriorityQueue<>();
         for (Node node : list) {
             stack.add(node);
         }

@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 import lazyroute.datastructures.Stack;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static lazyroute.datastructures.Stack.createStack;
@@ -17,6 +10,7 @@ import static lazyroute.datastructures.Stack.createStack;
  *
  * @author inkeriv
  */
+
 public class StackTest{ 
     
     Stack p;
@@ -72,7 +66,7 @@ public class StackTest{
         for (int i=0; i<1168; i++) {
             p.popStack();
         }
-        assertEquals(1215,p.size); //indeksi
+        assertEquals(1215,p.size); 
     }
     
     @Test

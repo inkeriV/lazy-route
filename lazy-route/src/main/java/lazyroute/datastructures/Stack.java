@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package lazyroute.datastructures;
 
 /**
@@ -11,13 +9,12 @@ package lazyroute.datastructures;
  */
 
 /* 
-
 Stack implemented as int array and int size. Elements (graph's nodes' id-numbers) are kept in the array and size
 tells the index of the next empty entry.
 
 This stack is used for returning the shortest path in the right order. 
-
 */
+
 public class Stack {
     
     public int[] stack ;

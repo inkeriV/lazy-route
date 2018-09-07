@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package lazyroute.graph;
 
 /**
@@ -11,11 +9,10 @@ package lazyroute.graph;
  */
 
 /*
-
 Node object. Has values id: indeks of this object in graph's list presentations,
 weight: node's weight, dist: distance from end node.
-
 */
+
 public class Node implements Comparable<Node> {
     
     public int id;
