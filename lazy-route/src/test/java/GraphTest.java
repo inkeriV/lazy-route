@@ -75,7 +75,7 @@ public class GraphTest {
                                         4,4,4,4,4,
                                         4,4,4,4,4,
                                         4,4,4,4,4 }, 7, 24, 5, 5, "a");
-        g.init();
+        g.getPath();
         
         assertEquals(1, g.getStartNodeCoordinateI());
         assertEquals(1, g.getStartNodeCoordinateJ());

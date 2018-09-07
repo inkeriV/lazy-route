@@ -43,7 +43,7 @@ public class MainTest {
         
         main(args);
 
-        assertEquals(h.init()+"\n", output.toString());       
+        assertEquals(h.getPath()+"\n", output.toString());       
     }
 
     @Test

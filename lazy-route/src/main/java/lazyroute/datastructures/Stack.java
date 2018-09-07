@@ -6,14 +6,14 @@ package lazyroute.datastructures;
 /**
  *
  * @author inkeriv
+ *
+ *
+ * 
+ * Stack implemented as int array and int size. Elements (graph's nodes' id-numbers) are kept in the array and size
+ * tells the index of the next empty entry.
+ *
+ * This stack is used for returning the shortest path in the right order. 
  */
-
-/* 
-Stack implemented as int array and int size. Elements (graph's nodes' id-numbers) are kept in the array and size
-tells the index of the next empty entry.
-
-This stack is used for returning the shortest path in the right order. 
-*/
 
 public class Stack {
     

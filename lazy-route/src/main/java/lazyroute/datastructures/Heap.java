@@ -8,12 +8,12 @@ import lazyroute.graph.Node;
 /**
  *
  * @author inkeriv
+ *
+ * 
+ *  
+ * Minheap for arranging nodes according to their dist+weigth. 
+ * Heap has a Node array and integer values for the length of the array and the number of nodes in the array. 
  */
-
-/*  
-Minheap for arranging nodes according to their dist+weigth. 
-Heap has a Node array and integer values for the length of the array and the number of nodes in the array. 
-*/
 
 public class Heap { 
 

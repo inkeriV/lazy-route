@@ -6,12 +6,12 @@ package lazyroute.graph;
 /**
  *
  * @author inkeriv
+ *
+ *
+ *
+ * Node object. Has values id: indeks of this object in graph's list presentations,
+ * weight: node's weight, dist: distance from end node.
  */
-
-/*
-Node object. Has values id: indeks of this object in graph's list presentations,
-weight: node's weight, dist: distance from end node.
-*/
 
 public class Node implements Comparable<Node> {
     

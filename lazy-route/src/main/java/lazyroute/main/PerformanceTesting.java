@@ -34,14 +34,14 @@ public class PerformanceTesting {
 
             long beginningTimeAStar = System.currentTimeMillis();
 
-            a.init();
+            a.getPath();
 
             long endingTimeAStar = System.currentTimeMillis();
             System.out.println("Computing with A-star took "+ (endingTimeAStar - beginningTimeAStar) + " ms.\n");
 
             long beginningTimeDijkstra = System.currentTimeMillis();
 
-            d.init();
+            d.getPath();
 
             long endingTimeDijkstra = System.currentTimeMillis();
             System.out.println("Computing with Dijkstra took " + (endingTimeDijkstra - beginningTimeDijkstra) + " ms.\n");

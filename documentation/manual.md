@@ -5,7 +5,7 @@
 * lataa lazy-route.jar [täältä](https://github.com/inkeriV/lazy-route/releases)
 * aja komentoriviltä haluamillasi argumenteilla, esim:
 ```
-java -jar your_file_path/lazy-route/lazy-route/target/lazy-route.jar 1,1,1,1,1,1,1,1,1, 1 9 3 3 a
+java -jar your_file_path/lazy-route.jar 1,1,1,1,1,1,1,1,1, 1 9 3 3 a
 ```
 * alla tarkemmin argumenteista
 

@@ -10,20 +10,18 @@ import static lazyroute.datastructures.Stack.createStack;
 /**
  *
  * @author inkeriv
+ *
+ *  Path class has a Path-object which includes:
+ *   int array - has the node id's of the nodes in the shortest path from start node to end node
+ *   int - the weight of the path (start node weight not included)
+ *   int - the number of nodes in the shortest path including start and end nodes
+ *  
+ * shortestPath method returns a Path object to the very first method called. ShortestPath method calls either
+ * Dijkstra or AStar.
+ *
+ * Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
+ * shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
  */
-
-/*
-Path class has a Path-object which includes:
-    int array - has the node id's of the nodes in the shortest path from start node to end node
-    int - the weight of the path (start node weight not included)
-    int - the number of nodes in the shortest path including start and end nodes
-    
-shortestPath method returns a Path object to the very first method called. ShortestPath method calls either
-Dijkstra or AStar.
-
-Dijkstra and AStar actually find the shortest path, and document it in an int array ("path"). After calling either one of those two,
-shortestPath creates a null Path object and inserts the correct values in its attributes based on the path-array.
-*/
 
 public class Path {
     
@@ -37,7 +35,18 @@ public class Path {
         nodecount=0;
     }
 
-   
+   /**
+    * 
+    * @param list list of all node-objects
+    * @param vl adjacency list
+    * @param a start node
+    * @param l end node
+    * @param alg String alg tells the wanted algorithm
+    * @param nodes integer list of nodes (has nodes' indexes)
+    * @param weights initialised list of node-objects' weights
+    * @param dists initialised list of node-objects' distances
+    * @return Path object
+    */
     public static Path shortestPath(Node[] list, int[][] vl, int a, int l, String alg, int[] nodes, int[] weights, int[] dists) { 
         
         Heap minheap = new Heap();
@@ -98,6 +107,17 @@ public class Path {
         return resultpath;
     }
     
+    /**
+     * Dijkstra's algorithm
+     * 
+     * @param vl adjacency list
+     * @param l end node
+     * @param nodes integer list of nodes
+     * @param dists nodes' distances
+     * @param checked boolean list to keep track on visited dealt nodes
+     * @param path will have the shortest path saved in
+     * @param minheap to put nodes in
+     */
     private static void pathingDijkstra( int[][] vl, int l, int[] nodes, int[] dists, boolean[] checked, int[] path, Heap minheap) {
         
         while (checked[l-1] == false) {
@@ -121,7 +141,18 @@ public class Path {
         }
     }
     
-    
+    /**
+     * A-star algorithm
+     * 
+     * @param vl adjacency list
+     * @param l end node
+     * @param nodes integer list of nodes
+     * @param weights nodes' weights
+     * @param dists nodes' distances
+     * @param checked boolean list to keep track on visited dealt nodes
+     * @param path will have the shortest path saved in
+     * @param minheap to put nodes in
+     */
     private static void pathingAStar( int[][] vl, int l, int[] nodes,int[] weights, int[] dists, boolean[] checked, int[] path, Heap minheap) {
         
         while (checked[l-1] == false) {

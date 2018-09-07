@@ -42,7 +42,7 @@ public class Main {
         String algoritmi = args[5];
         
         Graph koe=new Graph(lista, alkusolmu, loppusolmu, m, n, algoritmi); 
-        System.out.println(koe.init());
+        System.out.println(koe.getPath());
         
                 
         /*

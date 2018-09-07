@@ -41,9 +41,12 @@ public class Graph {
         alg = al;
     }
      
-    
-    //creating graph presentations
-    public String init() {
+    /**
+     *  Method creates presentations of the graph.
+     *  
+     * @return path as a String
+     */
+    public String getPath() {
 
         Node[] list = new Node[nodes.length] ;
         int[][] graph = new int[m][n];
@@ -109,13 +112,32 @@ public class Graph {
     }
     
     
-    //heuristic function
+    /**
+     * heuristic function, Manhattan distance.
+     * @param ai is the end node i-coordinate
+     * @param aj is the end node j-coordinate
+     * @param bi is nodes i-coordinate
+     * @param bj is nodes j-coordinate
+     * @return distance between those nodes
+     */
     public int h( int ai, int aj, int bi, int bj) { 
         int lop = Math.abs(ai-bi)+Math.abs(aj-bj);
         return lop;
     }
     
-    
+    /**
+     * creates the adjacency list for A-star
+     * initialises also weight, dists and node lists.
+     * 
+     * @param nodes node weights as integers
+     * @param vl adjacency list
+     * @param m 2d graph's width
+     * @param n 2d graph's length
+     * @param list yet null, will have initialised node-objects
+     * @param weights yet empty, will have nodes' initialised weights 
+     * @param dists yet empty, will have nodes' initialised distances 
+     * @return adjacency list
+     */
     public int[][] AdjacencyListAStar(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] weights, int[] dists) {
         int x = 0;
         
@@ -162,7 +184,18 @@ public class Graph {
         return vl;
     }
     
-    
+    /**
+     * creates the adjacency list for Dijkstra
+     * initialises also dists and node lists.
+     * 
+     * @param nodes node weights as integers
+     * @param vl adjacency list
+     * @param m 2d graph's width
+     * @param n 2d graph's length
+     * @param list yet null, will have initialised node-objects
+     * @param dists yet empty, will have nodes' initialised distances 
+     * @return adjacency list
+     */
     public int[][] AdjacencyListDijkstra(int[] nodes, int[][] vl, int m, int n, Node[] list, int[] dists) {
      
         int x = 0;
@@ -209,9 +242,17 @@ public class Graph {
     }
     
     
-    //return true if node-coordinates are within the graph
-    //used for checking what neighbour nodes a node has (previous,next,upper,bottom)
-    //(thanks to my code reviewer)
+    /**
+     * Returns true if node-coordinates are within the graph
+     * used for checking what neighbour nodes a node has (previous,next,upper,bottom).
+     * (thanks to my code reviewer)
+     * 
+     * @param i i and j are supposed neighbour node's coordinates
+     * @param j
+     * @param m m and n are the width and length of the graph
+     * @param n
+     * @return true or false
+     */
     private boolean isWithinBounds(int i, int j, int m, int n) {
         if (i>=0 && i<m && j>=0 && j<n) {
             return true;
