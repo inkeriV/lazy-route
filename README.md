@@ -1,5 +1,5 @@
 # lazy-route
-Ohjelma etsii lyhimmän reitin mxn verkossa kahden solmun välillä dijkstran- tai a*-algoritmilla.
+Ohjelma etsii lyhimmän reitin mxm verkossa kahden solmun välillä dijkstran- tai a*-algoritmilla.
 
 
 ### dokumentaatio
