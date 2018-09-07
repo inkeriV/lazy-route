@@ -54,4 +54,4 @@ Minimikeko-oliolla on myös kokonaislukulista, johon alkiot laitetaan, listan ko
 
 
 ### Testauksesta
-[täällä](https://github.com/inkeriV/lazy-route/blob/master/documentation/testaus.md)
+[täällä](https://github.com/inkeriV/lazy-route/blob/master/docs/testaus.md)

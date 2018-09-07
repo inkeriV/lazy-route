@@ -48,4 +48,4 @@ The number of nodes in this path is: 10
 ```
 
 #### Suorituskyvystä
-* [täältä](https://github.com/inkeriV/lazy-route/blob/master/documentation/testaus.md)
+* [täältä](https://github.com/inkeriV/lazy-route/blob/master/docs/testaus.md)

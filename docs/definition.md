@@ -18,5 +18,5 @@ Helsingin yliopiston aineopintojen harjoitustyö, Tietorakenteet ja algoritmit, 
 * tavoite tilavaativuus O(|V|)
 
 * Ohjelma saa syötteenään listan solmujen painoista, alku- ja loppusolmun järjestysnumeron, verkon mitat m ja n sekä käytettävän algoritmin alkukirjaimen (d/a).
-* [Toteutuksesta tarkemmin](https://github.com/inkeriV/lazy-route/blob/master/documentation/toteutus.md)
-* [Käyttöohje](https://github.com/inkeriV/lazy-route/blob/master/documentation/manual.md)
+* [Toteutuksesta tarkemmin](https://github.com/inkeriV/lazy-route/blob/master/docs/toteutus.md)
+* [Käyttöohje](https://github.com/inkeriV/lazy-route/blob/master/docs/manual.md)

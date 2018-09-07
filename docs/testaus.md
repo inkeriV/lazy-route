@@ -20,21 +20,21 @@ Testasin suorituskykyä kolmeen otteeseen testaavalla metodilla, jolla joka kerr
 
 #### 1. kerta
 
-![eka](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suorituskyky1.png)
+![eka](https://github.com/inkeriV/lazy-route/blob/master/docs/pictures/suorituskyky1.png)
 
 * A-star mediaani: 683.5 ms.
 * Dijkstra mediaani: 734.5 ms. 
 
 #### 2. kerta
 
-![toka](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suoritus2.png)
+![toka](https://github.com/inkeriV/lazy-route/blob/master/docs/pictures/suoritus2.png)
 
 * A-star mediaani: 682 ms.
 * Dijkstra mediaani: 727 ms.
 
 #### 3. kerta
 
-![kolm](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suoritus3.png)
+![kolm](https://github.com/inkeriV/lazy-route/blob/master/docs/pictures/suoritus3.png)
 
 * A-star mediaani: 691.5 ms.
 * Dijkstra mediaani: 733 ms.
