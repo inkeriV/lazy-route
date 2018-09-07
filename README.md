@@ -1,5 +1,6 @@
 # lazy-route
-Ohjelma etsii lyhimmän reitin mxm verkossa kahden solmun välillä dijkstran- tai a*-algoritmilla.
+Javalla kirjoitettu Maven projekti Helsingin Yliopiston kurssille Aineopintojen harjoitustyö: tietorakenteet ja algoritmit, loppukesä 2018. 
+Ohjelma etsii lyhimmän reitin m*m verkossa kahden solmun välillä joko Dijkstran algoritmilla tai A* -algoritmilla.
 
 
 ### dokumentaatio
