@@ -159,8 +159,15 @@ public class Path {
     public int getNumberOfNodesInPath() { return nodecount; }
     
     
-    public String ToString() {
-        String result="\nShortest path between given start node and end node:\n";
+    public String ToString(int a, int l, String alg) {
+        
+        String algorithm = "";
+        
+        if (alg.equalsIgnoreCase("d")) { algorithm = "Dijkstra's algorithm."; }
+        if (alg.equalsIgnoreCase("a")) { algorithm = "A-Star algorithm."; }
+        
+        String result="\nComputed with "+algorithm+"\nShortest path between given start node: "+a+" and end node: "+l+" is:\n";
+        
         for (int i=0; i<nodepath.length; i++) {
             if (i==nodepath.length-1) {
                 result+=nodepath[i]+"\n";
@@ -169,7 +176,7 @@ public class Path {
             }
         }
         result+="The weight of this path is: "+totalweight+"\n";
-        result+="The number of nodes in this path is: "+nodecount;
+        result+="The number of nodes in this path is: "+nodecount+"\n\n";
         
         return result+"\n";
     }

@@ -48,7 +48,7 @@ public class Graph {
      
   
     //creating graph presentations
-    public Path init() {
+    public String init() {
 
         Node[] list = new Node[nodes.length] ;
         //list = new Node[nodes.length];
@@ -104,9 +104,9 @@ public class Graph {
         }
         
         Path path=Path.shortestPath(list, vl, a, l, alg, nodes, weights, dists);
-        return path;
-        //System.out.println(path.ToString(path)); //KORJAA TÄMÄ
-        
+        String string = path.ToString(a,l,alg);
+        return string;
+        //System.out.println(path.ToString(path)); //KORJAA TÄMÄ    
     }
     
     
