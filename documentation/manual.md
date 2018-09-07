@@ -1,6 +1,7 @@
 ## Manuaali
 
 #### Aloitus
+
 * Kloonaa projekti komennolla:
 ```
 git clone https://github.com/inkeriV/lazy-route.git
@@ -11,14 +12,10 @@ kansio_minne_latasit_repon/lazy-route/lazy-route$
 ```
 * Suorita seuraavalla komennolla ja haluamillasi argumenteilla, esim:
 ```
-mvn compile exec:java -Dexec.mainClass=lazyroute.main.Main -Dexec.args="1,2,1,1,1,2,3,4,2,1,4,2,4,2,4,2, 2 7 2 4 a"
+mvn compile exec:java -Dexec.mainClass=lazyroute.main.Main -Dexec.args="1,2,1,1,1,2,3,4,2,1,4,2,4,2,4,2, 2 7 4 4 a"
 ```
 * Huom! Välilyönti erottaa argumentit toisistaan.
-* Huom! Tällä hetkellä verkko syötetty main-metodissa, eli voidaan suorittaa ilman argumentteja:
-```
-mvn compile exec:java -Dexec.mainClass=lazyroute.main.Main
-```
-
+* Huom! Laita pilkku viimeisenkin luvun jälkeen listassa
 
 #### Mitkä parametrit??
 
@@ -29,4 +26,15 @@ mvn compile exec:java -Dexec.mainClass=lazyroute.main.Main
 * Viimeinen parametri on joko kirjain d tai a, sen mukaan halutaanko reitti laske dijkstralla vai a-starilla
 
 #### Output
-* Tällä hetkellä tuloksena tulostetaan lyhin reitti solmujen järjestysnumeron mukaan muotoa 
+* Output jäi valitettavasti vähän köppäiseksi, ja reitti on esitetty vain solmujen järjestysnumeroina alkusolmusta loppusolmuun. Mukana myös, millä algoritmilla se laskettiin, montako solmua matkalla oli ja sen kokonaispaino. Kokonaispainoon ei ole huomioitu alkusolmun painoa.
+* Näyttää tällaiselta:
+``` 
+Computed with Dijkstra's algorithm.
+Shortest path between given start node: 1 and end node: 35 is:
+1 => 2 => 3 => 4 => 5 => 11 => 17 => 23 => 29 => 35
+The weight of this path is: 11
+The number of nodes in this path is: 10
+```
+
+#### Suorituskyvystä
+* [täältä](https://github.com/inkeriV/lazy-route/blob/master/documentation/testaus.md)
