@@ -7,7 +7,7 @@ Ohjelma etsii lyhimmän reitin mxn verkossa kahden solmun välillä dijkstran- t
 * [käyttöohje](https://github.com/inkeriV/lazy-route/blob/master/documentation/manual.md)
 * [toteutus](https://github.com/inkeriV/lazy-route/blob/master/documentation/toteutus.md)
 * [testaus](https://github.com/inkeriV/lazy-route/blob/master/documentation/testaus.md)
-* [javadoc](file:///home/local/vbinkeri/lazy-route/lazy-route/target/site/apidocs/index.html)
+* [javadocs]()
 
 
 ### viikkoraportit
