@@ -14,26 +14,26 @@ Outputtina on tuloste siitä, kuinka kauan kummallakin algoritmilla kesti millis
 
 Testasin suorituskykyä kolmeen otteeseen testaavalla metodilla, jolla joka kerralla kumpaakin algoritmia testattiin 10 kertaa. Kuvissa joka suorituskerran kohdalla (1-10) on eri verkko, mutta molemmat algoritmit käyttivät samalla kohtaa samaa verkkoa. A-star on lähes aina nopeampi. Alla tuloksia.
 
-##### 1. kerta
+#### 1. kerta
 
 ![eka](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suorituskyky1.png)
 
-A-star mediaani: 683.5 ms.
-Dijkstra mediaani: 734.5 ms. 
+* A-star mediaani: 683.5 ms.
+* Dijkstra mediaani: 734.5 ms. 
 
-##### 2. kerta
+#### 2. kerta
 
 ![toka](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suoritus2.png)
 
-A-star mediaani: 682 ms.
-Dijkstra mediaani: 727 ms.
+* A-star mediaani: 682 ms.
+* Dijkstra mediaani: 727 ms.
 
-##### 3. kerta
+#### 3. kerta
 
 ![kolm](https://github.com/inkeriV/lazy-route/blob/master/documentation/pictures/suoritus3.png)
 
-A-star mediaani: 691.5 ms.
-Dijkstra mediaani: 733 ms.
+* A-star mediaani: 691.5 ms.
+* Dijkstra mediaani: 733 ms.
 
 
 
